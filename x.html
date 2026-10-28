@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUNRISE BURGER（@sunrise_burger）さん / X</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        xBlue: '#1d9bf0',
+                        xBorder: '#eff3f4',
+                        xGray: '#536471'
+                    },
+                    fontFamily: { sans: ['"Noto Sans JP"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-[#0f1419] font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Header Bar -->
+    <header class="border-b border-xBorder sticky top-0 bg-white/85 backdrop-blur-md z-50">
+        <div class="max-w-2xl mx-auto px-4 h-13 flex items-center justify-between py-2">
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-[#0f1419] hover:bg-gray-100 p-2 rounded-full transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                </a>
+                <div>
+                    <div class="flex items-center gap-1">
+                        <h1 class="font-bold text-base leading-tight">SUNRISE BURGER</h1>
+                        <!-- 認証バッジ -->
+                        <svg class="w-4 h-4 text-xBlue fill-current" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p class="text-xs text-xGray">3,450 ポスト</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs bg-black text-white px-4 py-1.5 rounded-full font-bold hover:bg-gray-800 transition">
+                ホームに戻る
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto w-full flex-grow border-x border-xBorder">
+        <!-- Banner Image -->
+        <div class="h-48 bg-[#cfd9de] relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Profile Bar & Details -->
+        <div class="px-4 pb-4 border-b border-xBorder relative">
+            <div class="flex justify-between items-end -mt-16 mb-4">
+                <div class="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover">
+                </div>
+                <a href="order.html" class="bg-xBlue text-white font-bold text-sm px-5 py-2 rounded-full hover:bg-[#1a8cd8] transition shadow-sm">
+                    オンライン注文
+                </a>
+            </div>
+
+            <div class="flex items-center gap-1">
+                <h2 class="text-xl font-bold">SUNRISE BURGER 自由が丘</h2>
+                <svg class="w-4 h-4 text-xBlue fill-current" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <p class="text-xGray text-sm mb-3">@sunrise_burger</p>
+
+            <p class="text-sm leading-relaxed mb-3 text-[#0f1419]">
+                自由が丘・奥沢のプレミアムハンバーガー専門店。国産黒毛和牛100%パティと自家製バンズ、地場野菜にこだわった至高の一品をお届けします。営業時間 11:00-22:00 (火曜定休)
+            </p>
+
+            <div class="flex flex-wrap gap-y-1 gap-x-4 text-xs text-xGray mb-3">
+                <span class="flex items-center gap-1">📍 東京都世田谷区奥沢</span>
+                <a href="index.html" class="text-xBlue hover:underline">sunrise-burger.jp</a>
+                <span>📅 2026年1月から利用しています</span>
+            </div>
+
+            <div class="flex gap-5 text-sm">
+                <span class="text-xGray"><strong class="text-black">180</strong> フォロー中</span>
+                <span class="text-xGray"><strong class="text-black">4,520</strong> フォロワー</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-xBorder text-sm font-medium text-xGray">
+            <div class="flex-1 text-center py-3.5 border-b-4 border-xBlue text-black font-bold cursor-pointer hover:bg-gray-50/50">ポスト</div>
+            <div class="flex-1 text-center py-3.5 cursor-pointer hover:bg-gray-50/50">返信</div>
+            <div class="flex-1 text-center py-3.5 cursor-pointer hover:bg-gray-50/50">ハイライト</div>
+            <div class="flex-1 text-center py-3.5 cursor-pointer hover:bg-gray-50/50">メディア</div>
+            <div class="flex-1 text-center py-3.5 cursor-pointer hover:bg-gray-50/50">いいね</div>
+        </div>
+
+        <!-- Post 1 -->
+        <article class="p-4 border-b border-xBorder flex gap-3 hover:bg-[#f7f9f9] transition cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-grow">
+                <div class="flex items-center gap-1 text-sm">
+                    <span class="font-bold text-black hover:underline">SUNRISE BURGER 自由が丘</span>
+                    <svg class="w-3.5 h-3.5 text-xBlue fill-current" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-xGray text-xs">@sunrise_burger · 2時間</span>
+                </div>
+                <p class="text-sm mt-1 text-[#0f1419] leading-relaxed">
+                    本日のランチタイムもたくさんのご来店誠にありがとうございました！<br>
+                    大人気の「アボカド・クリーンバーガー」は、フレッシュなアボカドと肉汁あふれるパティの相性が抜群です。ディナータイムは22:00（L.O.21:00）まで営業しております！🍔✨
+                </p>
+                <div class="mt-3 rounded-2xl overflow-hidden border border-xBorder max-h-80">
+                    <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                </div>
+                <!-- Action bar (Reply, Repost, Like, Share) -->
+                <div class="flex justify-between max-w-md text-xGray text-xs mt-3 pr-6">
+                    <button class="flex items-center gap-1.5 hover:text-xBlue"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 12</button>
+                    <button class="flex items-center gap-1.5 hover:text-green-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> 48</button>
+                    <button class="flex items-center gap-1.5 hover:text-red-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg> 256</button>
+                    <button class="flex items-center gap-1.5 hover:text-xBlue"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></button>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-xGray border-t border-xBorder mt-12">
+        <p>© 2026 SUNRISE BURGER from X Corp.</p>
+    </footer>
+
+</body>
+</html>

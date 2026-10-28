@@ -59,7 +59,7 @@
             transform: scale(1.08);
         }
 
-        /* スクロールでふわっと表示させるアニメーション（時間を1.8秒に変更してよりゆっくりに） */
+        /* スクロールアニメーション（画面外に出たら元に戻る設定） */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -328,7 +328,7 @@
         </div>
     </footer>
 
-    <!-- スクロールアニメーション制御用スクリプト -->
+    <!-- スクロールアニメーション制御用スクリプト（画面外に出たら非表示に戻る設定） -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const observerOptions = {
@@ -340,7 +340,11 @@
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        // 画面内に入ったら表示
                         entry.target.classList.add('active');
+                    } else {
+                        // 画面外に出たら非表示（初期状態）に戻す
+                        entry.target.classList.remove('active');
                     }
                 });
             }, observerOptions);

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUNRISE BURGER (@sunrise_burger_jiyugaoka) • Instagram photos and videos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        igBorder: '#dbdbdb',
+                        igGray: '#737373',
+                        igBlue: '#0095f6',
+                        igHover: '#fafafa'
+                    },
+                    fontFamily: { sans: ['"Noto Sans JP"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-black font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation (Mobile & Base Header) -->
+    <header class="border-b border-igBorder sticky top-0 bg-white z-50">
+        <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+            <a href="index.html" class="font-bold text-lg tracking-tight flex items-center gap-1">
+                <span>SUNRISE BURGER</span>
+            </a>
+            <a href="index.html" class="text-xs font-semibold bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition">
+                サイトに戻る
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Profile Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+        <!-- Profile Header -->
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-20 border-b border-igBorder pb-12">
+            
+            <!-- Avatar with Instagram Gradient Ring -->
+            <div class="relative p-[3px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 flex-shrink-0">
+                <div class="w-24 h-24 md:w-36 md:h-36 rounded-full bg-white p-[2px]">
+                    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=400&auto=format&fit=crop" alt="Profile Icon" class="w-full h-full object-cover rounded-full">
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex-grow text-center md:text-left">
+                <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
+                    <h1 class="text-xl font-normal text-black">sunrise_burger_jiyugaoka</h1>
+                    <div class="flex gap-2">
+                        <a href="order.html" class="bg-igBlue text-white text-xs font-semibold px-4 py-1.5 rounded-lg hover:bg-[#1877f2] transition">
+                            オンライン注文
+                        </a>
+                        <button class="bg-gray-100 text-black text-xs font-semibold px-4 py-1.5 rounded-lg hover:bg-gray-200 transition">
+                            メッセージ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="flex justify-center md:justify-start gap-10 text-sm mb-4 text-black">
+                    <span>投稿 <strong class="font-semibold">48</strong></span>
+                    <span>フォロワー <strong class="font-semibold">1,280</strong></span>
+                    <span>フォロー中 <strong class="font-semibold">150</strong></span>
+                </div>
+
+                <!-- Bio -->
+                <div class="text-sm space-y-1 text-black">
+                    <p class="font-semibold">サンライズバーガー 自由が丘</p>
+                    <p class="text-igGray">🍔 自由が丘駅徒歩5分 / 奥沢駅徒歩3分</p>
+                    <p class="text-igGray">✨ 国産黒毛和牛100%パティと毎朝焼き上げる自家製バンズ</p>
+                    <a href="index.html" class="text-[#00376b] font-semibold hover:underline inline-block mt-1">sunrise-burger.jp</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highlights / Stories Reel -->
+        <div class="flex gap-6 py-6 overflow-x-auto border-b border-igBorder justify-start md:justify-center">
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-xs text-igGray">限定メニュー</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-xs text-igGray">店内の雰囲気</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-xs text-igGray">アクセス</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex justify-center gap-12 text-xs font-semibold tracking-widest text-igGray pt-2">
+            <span class="flex items-center gap-1.5 border-t border-black text-black pt-3 -mt-[1px] cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+                投稿
+            </span>
+            <span class="flex items-center gap-1.5 pt-3 cursor-pointer hover:text-black">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                リール
+            </span>
+            <span class="flex items-center gap-1.5 pt-3 cursor-pointer hover:text-black">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                タグ付け
+            </span>
+        </div>
+
+        <!-- Photo Grid -->
+        <div class="grid grid-cols-3 gap-1 md:gap-7 mt-4">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-xs text-igGray border-t border-igBorder mt-12">
+        <p>© 2026 SUNRISE BURGER from Instagram</p>
+    </footer>
+
+</body>
+</html>

@@ -72,15 +72,15 @@
                 </a>
             </header>
 
-            <!-- Banner Image -->
-            <div class="h-48 bg-gray-200 relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover">
+            <!-- Banner Image (Clickable) -->
+            <div class="h-48 bg-gray-200 relative overflow-hidden cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=1200&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:opacity-95 transition">
             </div>
 
             <!-- Profile Info Section -->
             <div class="px-4 pb-4 border-b border-xBorder relative">
                 <div class="flex justify-between items-end -mt-16 mb-4">
-                    <div class="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-sm">
+                    <div class="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-sm cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop">
                         <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover">
                     </div>
                     <a href="order.html" class="bg-xBlue text-white font-bold text-sm px-6 py-2 rounded-full hover:bg-[#1a8cd8] transition shadow-sm">
@@ -120,13 +120,13 @@
             </div>
 
             <!-- Post 1 -->
-            <article class="p-4 border-b border-xBorder flex gap-3 hover:bg-xHover transition cursor-pointer">
-                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+            <article class="p-4 border-b border-xBorder flex gap-3 hover:bg-xHover transition">
+                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop">
                     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-grow">
                     <div class="flex items-center gap-1 text-sm">
-                        <span class="font-bold text-black hover:underline">SUNRISE BURGER 自由が丘</span>
+                        <span class="font-bold text-black hover:underline cursor-pointer">SUNRISE BURGER 自由が丘</span>
                         <svg class="w-3.5 h-3.5 text-xBlue fill-current" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <span class="text-xGray text-xs">@sunrise_burger · 2時間</span>
                     </div>
@@ -134,8 +134,8 @@
                         本日のランチタイムもたくさんのご来店誠にありがとうございました！<br>
                         大人気の「アボカド・クリーンバーガー」は、フレッシュなアボカドと肉汁あふれるパティの相性が抜群です。ディナータイムは22:00（L.O.21:00）まで営業しております！🍔✨
                     </p>
-                    <div class="mt-3 rounded-2xl overflow-hidden border border-xBorder max-h-80">
-                        <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                    <div class="mt-3 rounded-2xl overflow-hidden border border-xBorder max-h-80 cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=1200&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:opacity-95 transition">
                     </div>
                     <!-- Action bar -->
                     <div class="flex justify-between max-w-md text-xGray text-xs mt-3 pr-6">
@@ -150,21 +150,21 @@
             </article>
 
             <!-- Post 2 -->
-            <article class="p-4 border-b border-xBorder flex gap-3 hover:bg-xHover transition cursor-pointer">
-                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+            <article class="p-4 border-b border-xBorder flex gap-3 hover:bg-xHover transition">
+                <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop">
                     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-grow">
                     <div class="flex items-center gap-1 text-sm">
-                        <span class="font-bold text-black hover:underline">SUNRISE BURGER 自由が丘</span>
+                        <span class="font-bold text-black hover:underline cursor-pointer">SUNRISE BURGER 自由が丘</span>
                         <svg class="w-3.5 h-3.5 text-xBlue fill-current" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <span class="text-xGray text-xs">@sunrise_burger · 3月15日</span>
                     </div>
                     <p class="text-sm mt-1 text-[#0f1419] leading-relaxed">
                         【期間限定】「クワトロチーズの雪解けバーガー」好評販売中です！4種の濃厚チーズが贅沢にとろけ合う、今しか味わえない特別な一品。WEBオーダーからの事前予約も承っております。
                     </p>
-                    <div class="mt-3 rounded-2xl overflow-hidden border border-xBorder max-h-80">
-                        <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                    <div class="mt-3 rounded-2xl overflow-hidden border border-xBorder max-h-80 cursor-pointer modal-trigger" data-img="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=1200&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:opacity-95 transition">
                     </div>
                     <!-- Action bar -->
                     <div class="flex justify-between max-w-md text-xGray text-xs mt-3 pr-6">
@@ -199,11 +199,20 @@
 
     </div>
 
-    <!-- JavaScript for Like button interaction -->
+    <!-- Image Modal Popup -->
+    <div id="imageModal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4">
+        <button id="closeModal" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 w-10 h-10 rounded-full flex items-center justify-center text-lg transition z-10">✕</button>
+        <div class="max-w-5xl max-h-[90vh] overflow-hidden flex items-center justify-center">
+            <img id="modalImgContent" src="" alt="拡大画像" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactions & Modal -->
     <script>
+        // Like button interaction
         document.querySelectorAll('.like-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                e.stopPropagation(); // 記事クリック等のイベント伝播防止
+                e.stopPropagation();
                 const heart = button.querySelector('.heart-icon');
                 const countNum = button.querySelector('.count-num');
                 let count = parseInt(countNum.textContent);
@@ -220,6 +229,38 @@
                     countNum.style.color = '';
                 }
             });
+        });
+
+        // Image Modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImgContent = document.getElementById('modalImgContent');
+        const closeModal = document.getElementById('closeModal');
+        const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const imgSrc = trigger.getAttribute('data-img');
+                if (imgSrc) {
+                    modalImgContent.src = imgSrc;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        const closeImageModal = () => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModal.addEventListener('click', closeImageModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeImageModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageModal();
         });
     </script>
 </body>

@@ -59,7 +59,7 @@
             transform: scale(1.08);
         }
 
-        /* スクロールアニメーション（画面外に出たら元に戻る設定） */
+        /* スクロールアニメーション（ゆっくり & 画面外で元に戻る） */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -328,22 +328,21 @@
         </div>
     </footer>
 
-    <!-- スクロールアニメーション制御用スクリプト（画面外に出たら非表示に戻る設定） -->
+    <!-- スクロールアニメーション制御用スクリプト（タイミングを遅らせる設定） -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const observerOptions = {
                 root: null,
-                rootMargin: '0px 0px -50px 0px',
-                threshold: 0.15
+                // 下方向に「-100px」余裕を持たせることで、要素が画面のさらに上（中央付近）に入ってくるまでアニメーションを開始させません
+                rootMargin: '0px 0px -100px 0px',
+                threshold: 0.2
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // 画面内に入ったら表示
                         entry.target.classList.add('active');
                     } else {
-                        // 画面外に出たら非表示（初期状態）に戻す
                         entry.target.classList.remove('active');
                     }
                 });

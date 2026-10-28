@@ -37,7 +37,7 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
-        body { background-color: #F8F9FA; }
+        body { background-color: #F8F9FA; overflow-x: hidden; }
         
         /* プレミアムなホバーエフェクト */
         .premium-card {
@@ -57,6 +57,18 @@
         }
         .premium-card:hover .img-zoom-container img {
             transform: scale(1.08);
+        }
+
+        /* スクロールでふわっと表示させるアニメーション用クラス */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -86,7 +98,7 @@
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=1920&auto=format&fit=crop" alt="SUNRISE BURGER Hero Image" class="w-full h-full object-cover opacity-40 scale-105 animate-pulse" style="animation-duration: 8s;">
         </div>
-        <div class="relative z-10 text-center px-6 flex flex-col items-center max-w-4xl">
+        <div class="relative z-10 text-center px-6 flex flex-col items-center max-w-4xl reveal">
             <p class="text-brand-gold font-display tracking-[0.4em] text-sm md:text-base mb-6">JIYUGAOKA & OKUSAWA</p>
             
             <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-serif text-white tracking-widest leading-relaxed md:leading-loose mb-8 font-light">
@@ -111,13 +123,15 @@
     <!-- Concept Section -->
     <section id="concept" class="py-28 bg-white border-b border-brand-border">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <p class="text-brand-gold font-display tracking-[0.3em] text-xs md:text-sm mb-3">OUR PHILOSOPHY</p>
-            <h2 class="text-3xl md:text-4xl font-display tracking-[0.15em] text-brand-dark mb-4">CONCEPT</h2>
-            <p class="text-zinc-500 font-serif text-sm tracking-widest">妥協なきこだわりが生み出す、本物の味わい</p>
+            <div class="reveal">
+                <p class="text-brand-gold font-display tracking-[0.3em] text-xs md:text-sm mb-3">OUR PHILOSOPHY</p>
+                <h2 class="text-3xl md:text-4xl font-display tracking-[0.15em] text-brand-dark mb-4">CONCEPT</h2>
+                <p class="text-zinc-500 font-serif text-sm tracking-widest">妥協なきこだわりが生み出す、本物の味わい</p>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-16 text-left">
                 <!-- Point 1 -->
-                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between">
+                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between reveal">
                     <div class="space-y-4">
                         <div class="text-brand-gold font-display text-3xl font-light">01</div>
                         <h3 class="text-xl font-medium tracking-wide text-brand-dark">国産黒毛和牛100%パティ</h3>
@@ -127,7 +141,7 @@
                     </div>
                 </div>
                 <!-- Point 2 -->
-                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between">
+                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between reveal" style="transition-delay: 150ms;">
                     <div class="space-y-4">
                         <div class="text-brand-gold font-display text-3xl font-light">02</div>
                         <h3 class="text-xl font-medium tracking-wide text-brand-dark">毎朝焼き上げる自家製バンズ</h3>
@@ -137,7 +151,7 @@
                     </div>
                 </div>
                 <!-- Point 3 -->
-                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between">
+                <div class="premium-card bg-brand-light p-8 border border-brand-border flex flex-col justify-between reveal" style="transition-delay: 300ms;">
                     <div class="space-y-4">
                         <div class="text-brand-gold font-display text-3xl font-light">03</div>
                         <h3 class="text-xl font-medium tracking-wide text-brand-dark">地元・奥沢の採れたて地場野菜</h3>
@@ -152,7 +166,7 @@
 
     <!-- Pickup Menu Section -->
     <section class="py-28 max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 reveal">
             <p class="text-brand-gold font-display tracking-[0.3em] text-xs md:text-sm mb-3">RECOMMENDED</p>
             <h2 class="text-3xl md:text-4xl font-display tracking-[0.15em] text-brand-dark mb-4">PICKUP MENU</h2>
             <p class="text-zinc-500 font-serif text-sm tracking-widest">SUNRISE BURGER を代表する至高の逸品</p>
@@ -160,7 +174,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
             <!-- Item 1 -->
-            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group">
+            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group reveal">
                 <div class="img-zoom-container h-64 w-full relative">
                     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop" alt="サンライズ・クラシック" class="w-full h-full object-cover">
                 </div>
@@ -175,7 +189,7 @@
             </article>
 
             <!-- Item 2 -->
-            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group">
+            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group reveal" style="transition-delay: 150ms;">
                 <div class="img-zoom-container h-64 w-full relative">
                     <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=800&auto=format&fit=crop" alt="アボカド・クリーンバーガー" class="w-full h-full object-cover">
                 </div>
@@ -190,7 +204,7 @@
             </article>
 
             <!-- Item 3 -->
-            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group">
+            <article class="premium-card bg-white rounded-none border border-brand-border flex flex-col group reveal" style="transition-delay: 300ms;">
                 <div class="img-zoom-container h-64 w-full relative">
                     <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=800&auto=format&fit=crop" alt="クワトロチーズの雪解けバーガー" class="w-full h-full object-cover">
                 </div>
@@ -205,7 +219,7 @@
             </article>
         </div>
 
-        <div class="text-center">
+        <div class="text-center reveal">
             <a href="menu.html" class="inline-block border border-brand-dark text-brand-dark font-display text-sm tracking-[0.2em] px-10 py-4 hover:bg-brand-dark hover:text-white transition-all duration-300">
                 VIEW ALL MENU
             </a>
@@ -214,7 +228,7 @@
 
     <!-- Online Order Takeout Banner -->
     <section class="bg-brand-dark text-white py-20 border-y border-brand-gold relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10 reveal">
             <p class="text-brand-gold font-display tracking-[0.3em] text-xs md:text-sm mb-4">TAKE OUT & DELIVERY</p>
             <h2 class="text-3xl md:text-5xl font-serif tracking-wider mb-6 font-light">
                 WEBからスマートにご注文
@@ -230,12 +244,12 @@
 
     <!-- Access & Store Info Section -->
     <section id="access" class="py-28 max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 reveal">
             <p class="text-brand-gold font-display tracking-[0.3em] text-xs md:text-sm mb-3">STORE INFORMATION</p>
             <h2 class="text-3xl md:text-4xl font-display tracking-[0.15em] text-brand-dark mb-4">ACCESS</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-white p-8 md:p-12 border border-brand-border shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-white p-8 md:p-12 border border-brand-border shadow-sm reveal">
             <div class="space-y-6 font-serif">
                 <h3 class="text-2xl font-display text-brand-gold tracking-widest border-b border-brand-border pb-4">
                     SUNRISE BURGER
@@ -313,6 +327,31 @@
             </div>
         </div>
     </footer>
+
+    <!-- スクロールアニメーション制御用スクリプト -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // 一度表示されたら監視を終了する場合
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 
 </body>
 </html>

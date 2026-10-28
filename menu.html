@@ -78,13 +78,13 @@
         /* リストのリーダー線（点線） */
         .menu-list-item {
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             margin-bottom: 1rem;
         }
         .menu-leader {
             flex-grow: 1;
             border-bottom: 1px dotted #ccc;
-            margin: 0 15px 5px 15px;
+            margin: 0 15px 10px 15px;
         }
     </style>
 </head>
@@ -252,10 +252,10 @@
                     <div class="menu-list-item group">
                         <h3 class="text-lg font-medium text-brand-dark group-hover:text-brand-gold transition-colors">三種芋のフレンチフライ</h3>
                         <div class="menu-leader"></div>
-                        <div class="text-brand-dark text-right min-w-[120px]">
-                            <span class="text-xs text-brand-gray mr-1">S</span><span class="font-display">¥350</span><br>
-                            <span class="text-xs text-brand-gray mr-1">M</span><span class="font-display">¥450</span><br>
-                            <span class="text-xs text-brand-gray mr-1">L</span><span class="font-display">¥600</span>
+                        <div class="text-brand-dark text-right min-w-[120px] leading-tight">
+                            <div><span class="text-xs text-brand-gray mr-1">S</span><span class="font-display">¥350</span></div>
+                            <div class="mt-1"><span class="text-xs text-brand-gray mr-1">M</span><span class="font-display">¥450</span></div>
+                            <div class="mt-1"><span class="text-xs text-brand-gray mr-1">L</span><span class="font-display">¥600</span></div>
                         </div>
                     </div>
                     

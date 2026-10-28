@@ -328,14 +328,14 @@
         </div>
     </footer>
 
-    <!-- スクロールアニメーション制御用スクリプト（タイミングを遅らせる設定） -->
+    <!-- スクロールアニメーション制御用スクリプト（タイミングをさらに遅らせた設定） -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const observerOptions = {
                 root: null,
-                // 下方向に「-100px」余裕を持たせることで、要素が画面のさらに上（中央付近）に入ってくるまでアニメーションを開始させません
-                rootMargin: '0px 0px -100px 0px',
-                threshold: 0.2
+                // 下方向に「-150px」余裕を持たせ、要素がしっかり画面内（中央付近）に入ってきてからアニメーションを開始
+                rootMargin: '0px 0px -150px 0px',
+                threshold: 0.3
             };
 
             const observer = new IntersectionObserver((entries, observer) => {

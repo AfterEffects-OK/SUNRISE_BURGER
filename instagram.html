@@ -25,8 +25,8 @@
 </head>
 <body class="bg-white text-black font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Top Navigation (Mobile & Base Header) -->
-    <header class="border-b border-igBorder sticky top-0 bg-white z-50">
+    <!-- Top Navigation -->
+    <header class="border-b border-igBorder sticky top-0 bg-white z-40">
         <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
             <a href="index.html" class="font-bold text-lg tracking-tight flex items-center gap-1">
                 <span>SUNRISE BURGER</span>
@@ -108,43 +108,177 @@
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
                 投稿
             </span>
-            <span class="flex items-center gap-1.5 pt-3 cursor-pointer hover:text-black">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                リール
-            </span>
-            <span class="flex items-center gap-1.5 pt-3 cursor-pointer hover:text-black">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                タグ付け
-            </span>
         </div>
 
-        <!-- Photo Grid -->
+        <!-- Photo Grid (Clickable to Open Modal) -->
         <div class="grid grid-cols-3 gap-1 md:gap-7 mt-4">
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item" 
+                 data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop"
+                 data-caption="看板メニューの「サンライズ・クラシック」！国産黒毛和牛100%パティの溢れる肉汁をぜひご堪能ください。🍔✨"
+                 data-likes="342"
+                 data-time="2日前">
                 <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
+                 data-img="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=800&auto=format&fit=crop"
+                 data-caption="大人気のアボカド・クリーンバーガー。フレッシュなアボカドを贅沢にハーフカット使用しています🥑"
+                 data-likes="512"
+                 data-time="4日前">
                 <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
+                 data-img="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=800&auto=format&fit=crop"
+                 data-caption="期間限定の「クワトロチーズの雪解けバーガー」🧀 とろけるチーズがたまりません！"
+                 data-likes="680"
+                 data-time="1週間前">
                 <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
+                 data-img="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop"
+                 data-caption="開放感あふれる店内でゆっくりとお食事をお楽しみいただけます。自由が丘駅徒歩5分です☕️"
+                 data-likes="289"
+                 data-time="2週間前">
                 <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
+                 data-img="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop"
+                 data-caption="香ばしく焼き上げたバンズとジューシーなパティ。毎朝店内で手作りしています👨‍🍳"
+                 data-likes="421"
+                 data-time="3週間前">
                 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer">
+            <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
+                 data-img="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=800&auto=format&fit=crop"
+                 data-caption="テイクアウト・WEBオーダーも好評受付中！ご自宅やオフィスでも当店の味をそのままどうぞ。"
+                 data-likes="375"
+                 data-time="1ヶ月前">
                 <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
         </div>
     </main>
+
+    <!-- Modal Popup for Post Detail -->
+    <div id="postModal" class="fixed inset-0 z-50 bg-black/70 hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl rounded-lg overflow-hidden flex flex-col md:flex-row relative shadow-2xl max-h-[90vh]">
+            <!-- Close Button -->
+            <button id="closeModal" class="absolute top-3 right-3 z-10 text-white md:text-black bg-black/40 md:bg-gray-100 hover:bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center transition">
+                ✕
+            </button>
+
+            <!-- Modal Left: Image -->
+            <div class="w-full md:w-3/5 bg-black flex items-center justify-center max-h-[50vh] md:max-h-[85vh]">
+                <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-contain">
+            </div>
+
+            <!-- Modal Right: Comments & Info -->
+            <div class="w-full md:w-2/5 flex flex-col bg-white border-l border-igBorder max-h-[50vh] md:max-h-[85vh]">
+                <!-- Header in Modal -->
+                <div class="flex items-center gap-3 p-4 border-b border-igBorder">
+                    <div class="w-8 h-8 rounded-full overflow-hidden border border-igBorder">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-sm font-semibold">sunrise_burger_jiyugaoka</span>
+                </div>
+
+                <!-- Comments Scrollable Area -->
+                <div class="flex-grow p-4 overflow-y-auto space-y-4 text-sm">
+                    <!-- Main Caption -->
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p><span class="font-semibold mr-2">sunrise_burger_jiyugaoka</span><span id="modalCaption" class="text-gray-800"></span></p>
+                            <span id="modalTime" class="text-xs text-igGray mt-1 block"></span>
+                        </div>
+                    </div>
+
+                    <!-- Sample User Comment 1 -->
+                    <div class="flex items-start gap-3 pt-2">
+                        <div class="w-7 h-7 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-xs"><span class="font-semibold mr-2">jiyugaoka_gourmet</span>肉汁がすごくて本当に美味しかったです！また行きます✨</p>
+                            <span class="text-[10px] text-igGray mt-0.5 block">1日前</span>
+                        </div>
+                    </div>
+
+                    <!-- Sample User Comment 2 -->
+                    <div class="flex items-start gap-3 pt-2">
+                        <div class="w-7 h-7 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-xs"><span class="font-semibold mr-2">burger_lover_tokyo</span>バンズが香ばしくて最高でした🍔ごちそうさまです！</p>
+                            <span class="text-[10px] text-igGray mt-0.5 block">2日前</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Likes & Action Bar -->
+                <div class="p-4 border-t border-igBorder bg-white">
+                    <div class="flex items-center gap-4 mb-2 text-xl">
+                        <button class="hover:text-red-500 transition">♡</button>
+                        <button class="hover:text-gray-600 transition">💬</button>
+                        <button class="hover:text-gray-600 transition">✈️</button>
+                    </div>
+                    <p class="text-xs font-semibold mb-1">「いいね！」<span id="modalLikes"></span>件</p>
+                    <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+                        <input type="text" placeholder="コメントを追加..." class="w-full text-xs outline-none bg-transparent py-1">
+                        <button class="text-xs font-semibold text-igBlue hover:opacity-80">投稿</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="text-center py-8 text-xs text-igGray border-t border-igBorder mt-12">
         <p>© 2026 SUNRISE BURGER from Instagram</p>
     </footer>
 
+    <!-- JavaScript for Modal functionality -->
+    <script>
+        const modal = document.getElementById('postModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalLikes = document.getElementById('modalLikes');
+        const modalTime = document.getElementById('modalTime');
+        const closeModal = document.getElementById('closeModal');
+        const postItems = document.querySelectorAll('.post-item');
+
+        postItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.getAttribute('data-img');
+                const caption = item.getAttribute('data-caption');
+                const likes = item.getAttribute('data-likes');
+                const time = item.getAttribute('data-time');
+
+                modalImg.src = imgSrc;
+                modalCaption.textContent = caption;
+                modalLikes.textContent = likes;
+                modalTime.textContent = time;
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // 背景スクロール固定
+            });
+        });
+
+        const closeFn = () => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModal.addEventListener('click', closeFn);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeFn();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeFn();
+        });
+    </script>
 </body>
 </html>

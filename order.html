@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QRCode.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -43,6 +45,11 @@
             100% { transform: scale(1); }
         }
         .animate-pop { animation: pop 0.2s ease-out; }
+        
+        /* QRコード中央配置用 */
+        #orderQrCode img, #orderQrCode canvas {
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body class="bg-[#F8F9FA] text-[#1C1C1C] flex flex-col min-h-screen selection:bg-gold selection:text-white">
@@ -231,18 +238,31 @@
         </div>
     </div>
 
-    <!-- 完了モーダル -->
+    <!-- 完了モーダル（ID注文 & レジ提示用QRコード付き） -->
     <div id="successModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-[60] p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-none w-full max-w-md p-8 md:p-10 text-center shadow-2xl transform scale-95 transition-transform duration-300" id="successModalContent">
-            <div class="w-16 h-16 bg-gold text-white rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        <div class="bg-white rounded-none w-full max-w-md max-h-[92vh] overflow-y-auto p-6 md:p-8 text-center shadow-2xl transform scale-95 transition-transform duration-300" id="successModalContent">
+            <div class="w-12 h-12 bg-gold text-white rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
             </div>
-            <h3 class="text-2xl font-en font-bold mb-2">Thank You!</h3>
-            <p class="text-xl font-bold mb-4">ご注文ありがとうございます</p>
-            <p class="text-zinc-600 mb-8 text-sm leading-relaxed font-sans">
-                注文データが正常に送信されました。<br>
-                ご来店を心よりお待ちしております。
+            <h3 class="text-2xl font-en font-bold mb-1">Thank You!</h3>
+            <p class="text-lg font-bold mb-3">ご注文ありがとうございます</p>
+            <p class="text-zinc-600 mb-5 text-xs leading-relaxed font-sans">
+                受け取り時にレジにて以下の<strong class="text-black">注文ID</strong>または<strong class="text-black">QRコード</strong>をご提示ください。<br>
+                （※スクリーンショットでの保存をおすすめします）
             </p>
+
+            <!-- レジ確認用ボックス -->
+            <div class="bg-zinc-50 border-2 border-gold p-5 mb-6">
+                <p class="text-[11px] font-sans tracking-widest text-zinc-500 mb-1">ORDER ID / 注文番号</p>
+                <p id="displayOrderId" class="text-xl md:text-2xl font-mono font-bold tracking-wider text-black mb-4 select-all">ORD-00000000-XXXX</p>
+                
+                <!-- QRコード描画エリア -->
+                <div class="bg-white p-3 inline-block border border-zinc-200 shadow-sm">
+                    <div id="orderQrCode"></div>
+                </div>
+                <p class="text-[11px] text-zinc-400 font-sans mt-2">レジスキャナー読み取り用</p>
+            </div>
+
             <button type="button" id="btnCloseSuccess" class="bg-black text-white hover:bg-gold transition-colors duration-300 px-8 py-4 rounded-none font-bold w-full tracking-widest">
                 閉じる
             </button>
@@ -269,6 +289,16 @@
         const menuListEl = document.getElementById('menuList');
         const formTotalEl = document.getElementById('formTotal');
         let orderState = {};
+
+        // 一意のID注文を生成する関数（例: ORD-20261114-1A2B）
+        function generateOrderId() {
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return `ORD-${yyyy}${mm}${dd}-${randomStr}`;
+        }
 
         function renderMenu() {
             products.forEach(p => {
@@ -436,12 +466,14 @@
                 return;
             }
 
-            // ボタンの二重クリック防止とローディング表示
             btnSubmit.disabled = true;
             btnSubmit.textContent = "送信中...";
 
-            // バックエンドへ送るペイロードの構築
+            // ID注文を発行（フロントとスプレッドシートで共通利用）
+            const generatedOrderId = generateOrderId();
+
             const orderData = {
+                orderId: generatedOrderId,
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
@@ -452,7 +484,6 @@
                 items: selectedItems
             };
 
-            // Apps Script へ POST 送信（no-cors でリダイレクト・CORS制限を確実に回避）
             fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -465,6 +496,19 @@
                 btnSubmit.disabled = false;
                 btnSubmit.textContent = "この内容で注文を確定する";
                 closeConfirmModal();
+
+                // ID注文の表示とQRコードの描画
+                document.getElementById('displayOrderId').textContent = generatedOrderId;
+                const qrContainer = document.getElementById('orderQrCode');
+                qrContainer.innerHTML = ''; // 既存のQRコードをクリア
+                new QRCode(qrContainer, {
+                    text: generatedOrderId,
+                    width: 160,
+                    height: 160,
+                    colorDark: "#1C1C1C",
+                    colorLight: "#FFFFFF",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
 
                 // 成功モーダルの表示
                 successModal.classList.remove('hidden');

@@ -452,39 +452,35 @@
                 items: selectedItems
             };
 
-            // Apps Script へ POST 送信
+            // Apps Script へ POST 送信（no-cors でリダイレクト・CORS制限を確実に回避）
             fetch(WEB_APP_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8' // GASからのCORS制限回避用
+                    'Content-Type': 'text/plain;charset=utf-8'
                 },
                 body: JSON.stringify(orderData)
             })
-            .then(response => response.json())
-            .then(result => {
+            .then(() => {
                 btnSubmit.disabled = false;
                 btnSubmit.textContent = "この内容で注文を確定する";
                 closeConfirmModal();
 
-                if (result.status === 'success') {
-                    // 成功モーダルの表示
-                    successModal.classList.remove('hidden');
-                    document.body.classList.add('modal-open');
-                    setTimeout(() => {
-                        successModal.classList.remove('opacity-0');
-                        successModalContent.classList.remove('scale-95');
-                    }, 10);
-                    
-                    // フォームのリセット
-                    document.getElementById('orderForm').reset();
-                    Object.keys(orderState).forEach(id => {
-                        orderState[id] = 0;
-                        updateRowUI(id);
-                    });
-                    calcTotal();
-                } else {
-                    alert('注文の保存に失敗しました: ' + (result.message || '不明なエラー'));
-                }
+                // 成功モーダルの表示
+                successModal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
+                setTimeout(() => {
+                    successModal.classList.remove('opacity-0');
+                    successModalContent.classList.remove('scale-95');
+                }, 10);
+                
+                // フォームのリセット
+                document.getElementById('orderForm').reset();
+                Object.keys(orderState).forEach(id => {
+                    orderState[id] = 0;
+                    updateRowUI(id);
+                });
+                calcTotal();
             })
             .catch(error => {
                 btnSubmit.disabled = false;

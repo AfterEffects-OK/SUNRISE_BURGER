@@ -357,7 +357,7 @@
                 if(qty > 0) {
                     const subtotal = p.price * qty;
                     currentTotal += subtotal;
-                    selectedItems.push({ name: p.name, price: p.price, quantity: qty, subtotal: subtotal });
+                    selectedItems.push({ id: p.id, name: p.name, price: p.price, quantity: qty, subtotal: subtotal });
                 }
             });
             

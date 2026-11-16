@@ -276,15 +276,8 @@
         // ==========================================
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw2FoVt4QU3abQsrXTrIa3g_GilrP729RBQrPiF84t2-Q87TZ9bKvxp2hF4gN2lUdpYVg/exec";
 
-        const products = [
-            { id: '36692745', name: 'サンライズ・クラシック', price: 1280, cat: 'バーガー' },
-            { id: '354dc33c', name: 'アボカド・クリーンバーガー', price: 1450, cat: 'バーガー' },
-            { id: '793e97b9', name: 'ダブル・グラビティ', price: 1850, cat: 'バーガー' },
-            { id: 'b1ca3ca1', name: 'クワトロチーズの雪解けバーガー', price: 1700, cat: 'バーガー' },
-            { id: '88051954', name: '三種芋のフレンチフライ (S)', price: 350, cat: 'サイド' },
-            { id: '26a52a17', name: 'スモーキー・オニオンリング', price: 520, cat: 'サイド' },
-            { id: '05fa1791', name: '自家製クラフトコーラ', price: 550, cat: 'ドリンク' }
-        ];
+        // スプレッドシートから動的に取得するため空配列で初期化
+        let products = [];
 
         const menuListEl = document.getElementById('menuList');
         const formTotalEl = document.getElementById('formTotal');
@@ -300,44 +293,68 @@
             return `ORD-${yyyy}${mm}${dd}-${randomStr}`;
         }
 
-        function renderMenu() {
-            products.forEach(p => {
-                orderState[p.id] = 0;
+        // スプレッドシートから最新の商品データを取得してメニューを描画
+        async function loadProductsAndRender() {
+            try {
+                menuListEl.innerHTML = '<div class="text-center py-10 text-zinc-400 font-sans text-sm">メニューを読み込んでいます...</div>';
 
-                const row = document.createElement('div');
-                row.id = `row-${p.id}`;
-                row.className = 'menu-row flex flex-col md:flex-row md:items-center justify-between p-5 border-2 border-zinc-100 bg-white gap-4';
-                
-                row.innerHTML = `
-                    <div class="flex-grow">
-                        <span class="text-xs text-gold border border-gold px-2 py-1 rounded-none mr-2 font-bold">${p.cat}</span>
-                        <h4 class="font-bold text-lg md:text-xl inline-block mt-2 md:mt-0">${p.name}</h4>
-                        <p class="text-zinc-500 font-en mt-1 md:mt-2 text-lg">¥${p.price.toLocaleString()}</p>
-                    </div>
+                const response = await fetch(`${WEB_APP_URL}?action=getProducts`);
+                const data = await response.json();
+
+                if (data.status === 'success' && Array.isArray(data.products)) {
+                    products = data.products;
+                } else {
+                    throw new Error("商品データの取得に失敗しました。");
+                }
+
+                menuListEl.innerHTML = '';
+
+                if (products.length === 0) {
+                    menuListEl.innerHTML = '<div class="text-center py-10 text-zinc-400 font-sans text-sm">現在注文可能なメニューはありません。</div>';
+                    return;
+                }
+
+                products.forEach(p => {
+                    orderState[p.id] = 0;
+
+                    const row = document.createElement('div');
+                    row.id = `row-${p.id}`;
+                    row.className = 'menu-row flex flex-col md:flex-row md:items-center justify-between p-5 border-2 border-zinc-100 bg-white gap-4';
                     
-                    <div class="flex-shrink-0 flex items-center justify-end w-full md:w-auto h-12">
-                        <button type="button" id="btn-add-${p.id}" class="w-32 h-full border-2 border-gold text-gold font-bold flex items-center justify-center gap-1 hover:bg-gold hover:text-white transition-colors active:scale-95" onclick="changeQty('${p.id}', 1)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                            追加
-                        </button>
-
-                        <div id="ctrl-${p.id}" class="hidden w-36 h-full bg-gold text-white flex items-center shadow-md">
-                            <button type="button" class="w-12 h-full flex items-center justify-center hover:bg-gold-dark transition-colors active:bg-yellow-600" onclick="changeQty('${p.id}', -1)">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"></path></svg>
-                            </button>
-                            <div class="flex-grow text-center font-bold text-xl font-en" id="qty-display-${p.id}">0</div>
-                            <button type="button" class="w-12 h-full flex items-center justify-center hover:bg-gold-dark transition-colors active:bg-yellow-600" onclick="changeQty('${p.id}', 1)">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
-                            </button>
+                    row.innerHTML = `
+                        <div class="flex-grow">
+                            <span class="text-xs text-gold border border-gold px-2 py-1 rounded-none mr-2 font-bold">${p.cat}</span>
+                            <h4 class="font-bold text-lg md:text-xl inline-block mt-2 md:mt-0">${p.name}</h4>
+                            <p class="text-zinc-500 font-en mt-1 md:mt-2 text-lg">¥${p.price.toLocaleString()}</p>
                         </div>
-                    </div>
-                `;
-                menuListEl.appendChild(row);
-            });
+                        
+                        <div class="flex-shrink-0 flex items-center justify-end w-full md:w-auto h-12">
+                            <button type="button" id="btn-add-${p.id}" class="w-32 h-full border-2 border-gold text-gold font-bold flex items-center justify-center gap-1 hover:bg-gold hover:text-white transition-colors active:scale-95" onclick="changeQty('${p.id}', 1)">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                追加
+                            </button>
+
+                            <div id="ctrl-${p.id}" class="hidden w-36 h-full bg-gold text-white flex items-center shadow-md">
+                                <button type="button" class="w-12 h-full flex items-center justify-center hover:bg-gold-dark transition-colors active:bg-yellow-600" onclick="changeQty('${p.id}', -1)">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"></path></svg>
+                                </button>
+                                <div class="flex-grow text-center font-bold text-xl font-en" id="qty-display-${p.id}">0</div>
+                                <button type="button" class="w-12 h-full flex items-center justify-center hover:bg-gold-dark transition-colors active:bg-yellow-600" onclick="changeQty('${p.id}', 1)">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    menuListEl.appendChild(row);
+                });
+            } catch (error) {
+                console.error('商品データの読み込みエラー:', error);
+                menuListEl.innerHTML = '<div class="text-center py-10 text-red-500 font-sans text-sm">メニューの読み込みに失敗しました。ページを再読み込みしてください。</div>';
+            }
         }
 
         function changeQty(id, delta) {
-            let currentQty = orderState[id];
+            let currentQty = orderState[id] || 0;
             let newQty = currentQty + delta;
             
             if (newQty < 0) newQty = 0;
@@ -354,6 +371,7 @@
             const btnAdd = document.getElementById(`btn-add-${id}`);
             const ctrl = document.getElementById(`ctrl-${id}`);
             const display = document.getElementById(`qty-display-${id}`);
+            if (!row) return;
 
             if (qty > 0) {
                 row.classList.remove('border-zinc-100', 'bg-white');
@@ -383,7 +401,7 @@
             selectedItems = [];
             
             products.forEach(p => {
-                const qty = orderState[p.id];
+                const qty = orderState[p.id] || 0;
                 if(qty > 0) {
                     const subtotal = p.price * qty;
                     currentTotal += subtotal;
@@ -544,7 +562,8 @@
             }, 300);
         });
 
-        renderMenu();
+        // ページ読み込み時にスプレッドシートから最新メニューを取得
+        loadProductsAndRender();
     </script>
 </body>
 </html>

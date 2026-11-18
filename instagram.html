@@ -164,26 +164,40 @@
             </div>
         </div>
 
-        <!-- TAB CONTENT: リール (Reels Grid) -->
+        <!-- TAB CONTENT: リール (Reels Vertical Grid with Play Icon & Video Badge) -->
         <div id="tab-reels" class="tab-content hidden grid grid-cols-3 gap-1 md:gap-7 mt-4">
-            <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-lg"
+            <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
                  data-img="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop"
                  data-caption="【リール動画】鉄板でジューシーに焼き上げる黒毛和牛100%パティの音をお届け！🔥🎵 #リール #ハンバーガー"
                  data-likes="1,420"
-                 data-time="3日前">
+                 data-time="3日前"
+                 data-is-reel="true">
                 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
-                <div class="absolute bottom-2 left-2 flex items-center gap-1 text-white text-xs font-bold drop-shadow">
-                    ▶ 1.2万回視聴
+                <!-- Reels Overlay Badge & Play Icon -->
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition flex flex-col justify-between p-3 pointer-events-none">
+                    <div class="self-end text-white drop-shadow">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-white text-xs font-bold drop-shadow">
+                        ▶ 1.2万回視聴
+                    </div>
                 </div>
             </div>
-            <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-lg"
+
+            <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
                  data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop"
                  data-caption="【リール動画】朝焼き立ての自家製バンズができるまで🍞✨職人のこだわりをチラ見せ！"
                  data-likes="890"
-                 data-time="1週間前">
+                 data-time="1週間前"
+                 data-is-reel="true">
                 <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
-                <div class="absolute bottom-2 left-2 flex items-center gap-1 text-white text-xs font-bold drop-shadow">
-                    ▶ 8.5千回視聴
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition flex flex-col justify-between p-3 pointer-events-none">
+                    <div class="self-end text-white drop-shadow">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-white text-xs font-bold drop-shadow">
+                        ▶ 8.5千回視聴
+                    </div>
                 </div>
             </div>
         </div>
@@ -200,7 +214,7 @@
         </div>
     </main>
 
-    <!-- Modal Popup for Post Detail -->
+    <!-- Modal Popup for Post/Reel Detail -->
     <div id="postModal" class="fixed inset-0 z-50 bg-black/70 hidden items-center justify-center p-4">
         <div class="bg-white w-full max-w-4xl rounded-lg overflow-hidden flex flex-col md:flex-row relative shadow-2xl max-h-[90vh]">
             <!-- Close Button -->
@@ -208,9 +222,13 @@
                 ✕
             </button>
 
-            <!-- Modal Left: Image -->
-            <div class="w-full md:w-3/5 bg-black flex items-center justify-center max-h-[50vh] md:max-h-[85vh]">
+            <!-- Modal Left: Media Viewer (Image or Simulated Video Player) -->
+            <div class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh]">
                 <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-contain">
+                <!-- Video play simulation badge for reels -->
+                <div id="reelBadge" class="absolute inset-0 flex items-center justify-center bg-black/30 hidden pointer-events-none">
+                    <div class="w-16 h-16 rounded-full bg-black/60 text-white flex items-center justify-center text-2xl pl-1 shadow-lg">▶</div>
+                </div>
             </div>
 
             <!-- Modal Right: Comments & Info -->
@@ -291,16 +309,13 @@
             button.addEventListener('click', () => {
                 const targetTab = button.getAttribute('data-tab');
 
-                // Reset tab button styles
                 tabButtons.forEach(btn => {
                     btn.classList.remove('border-t', 'border-black', 'text-black');
                     btn.classList.add('text-igGray');
                 });
-                // Activate clicked tab button
                 button.classList.add('border-t', 'border-black', 'text-black');
                 button.classList.remove('text-igGray');
 
-                // Hide all contents and show target
                 tabContents.forEach(content => {
                     if (content.id === `tab-${targetTab}`) {
                         content.classList.remove('hidden');
@@ -311,12 +326,13 @@
             });
         });
 
-        // Modal functionality (using event delegation for dynamic tabs)
+        // Modal functionality for Posts & Reels
         const modal = document.getElementById('postModal');
         const modalImg = document.getElementById('modalImg');
         const modalCaption = document.getElementById('modalCaption');
         const modalLikes = document.getElementById('modalLikes');
         const modalTime = document.getElementById('modalTime');
+        const reelBadge = document.getElementById('reelBadge');
         const closeModal = document.getElementById('closeModal');
 
         document.addEventListener('click', (e) => {
@@ -326,15 +342,24 @@
                 const caption = item.getAttribute('data-caption');
                 const likes = item.getAttribute('data-likes');
                 const time = item.getAttribute('data-time');
+                const isReel = item.getAttribute('data-is-reel');
 
                 modalImg.src = imgSrc;
                 modalCaption.textContent = caption;
                 modalLikes.textContent = likes;
                 modalTime.textContent = time;
 
+                if (isReel === 'true') {
+                    reelBadge.classList.remove('hidden');
+                    reelBadge.classList.add('flex');
+                } else {
+                    reelBadge.classList.remove('flex');
+                    reelBadge.classList.add('hidden');
+                }
+
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-                document.body.style.overflow = 'hidden'; // 背景スクロール固定
+                document.body.style.overflow = 'hidden';
             }
         });
 

@@ -22,6 +22,15 @@
             }
         }
     </script>
+    <style>
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        .animate-zoom {
+            animation: slowZoom 6s ease-out infinite alternate;
+        }
+    </style>
 </head>
 <body class="bg-white text-black font-sans antialiased min-h-screen flex flex-col">
 
@@ -167,7 +176,7 @@
         <!-- TAB CONTENT: リール (Reels Vertical Grid) -->
         <div id="tab-reels" class="tab-content hidden grid grid-cols-3 gap-1 md:gap-7 mt-4">
             <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
-                 data-video="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                 data-img="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop"
                  data-caption="【リール動画】鉄板でジューシーに焼き上げる黒毛和牛100%パティの音をお届け！🔥🎵 #リール #ハンバーガー"
                  data-likes="1,420"
                  data-time="3日前"
@@ -184,7 +193,7 @@
             </div>
 
             <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
-                 data-video="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+                 data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop"
                  data-caption="【リール動画】朝焼き立ての自家製バンズができるまで🍞✨職人のこだわりをチラ見せ！"
                  data-likes="890"
                  data-time="1週間前"
@@ -221,10 +230,14 @@
                 ✕
             </button>
 
-            <!-- Modal Left: Media Viewer (Image or Video Player) -->
-            <div class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh]">
-                <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-contain">
-                <video id="modalVideo" src="" class="w-full h-full object-contain hidden" controls autoplay loop playsinline></video>
+            <!-- Modal Left: Media Viewer (Zoom Animation with Play/Pause Button) -->
+            <div id="mediaContainer" class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh] overflow-hidden cursor-pointer" title="クリックして再生/一時停止">
+                <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-cover transition-transform duration-700">
+                
+                <!-- Reel Play Overlay Button -->
+                <div id="reelPlayOverlay" class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition">
+                    <div id="playBtnCircle" class="w-16 h-16 rounded-full bg-black/60 text-white flex items-center justify-center text-2xl pl-1 shadow-lg backdrop-blur-sm transition transform hover:scale-110">▶</div>
+                </div>
             </div>
 
             <!-- Modal Right: Comments & Info -->
@@ -295,7 +308,7 @@
         <p>© 2026 SUNRISE BURGER from Instagram</p>
     </footer>
 
-    <!-- JavaScript for Tabs & Modal functionality -->
+    <!-- JavaScript for Tabs & Animation Controls -->
     <script>
         // Tab Switching Functionality
         const tabButtons = document.querySelectorAll('.tab-btn');
@@ -322,48 +335,45 @@
             });
         });
 
-        // Modal functionality for Posts & Reels
+        // Modal functionality for Posts & Reels Animation
         const modal = document.getElementById('postModal');
         const modalImg = document.getElementById('modalImg');
-        const modalVideo = document.getElementById('modalVideo');
         const modalCaption = document.getElementById('modalCaption');
         const modalLikes = document.getElementById('modalLikes');
         const modalTime = document.getElementById('modalTime');
+        const mediaContainer = document.getElementById('mediaContainer');
+        const reelPlayOverlay = document.getElementById('reelPlayOverlay');
+        const playBtnCircle = document.getElementById('playBtnCircle');
         const closeModal = document.getElementById('closeModal');
+
+        let isPlaying = false;
 
         document.addEventListener('click', (e) => {
             const item = e.target.closest('.post-item');
             if (item) {
+                const imgSrc = item.getAttribute('data-img');
                 const caption = item.getAttribute('data-caption');
                 const likes = item.getAttribute('data-likes');
                 const time = item.getAttribute('data-time');
                 const isReel = item.getAttribute('data-is-reel');
 
+                modalImg.src = imgSrc;
                 modalCaption.textContent = caption;
                 modalLikes.textContent = likes;
                 modalTime.textContent = time;
 
+                // 初期状態としてアニメーション停止
+                isPlaying = false;
+                modalImg.classList.remove('animate-zoom');
+
                 if (isReel === 'true') {
-                    // リールの場合：画像層を隠して動画プレイヤーを表示・再生
-                    const videoSrc = item.getAttribute('data-video');
-                    modalImg.classList.add('hidden');
-                    modalImg.src = '';
-                    modalVideo.classList.remove('hidden');
-                    modalVideo.src = videoSrc;
-                    
-                    // ブラウザの自動再生ポリシー対策として非同期で再生を試行
-                    modalVideo.play().catch(error => {
-                        console.log("自動再生がブロックされました。コントロールから再生してください。", error);
-                    });
+                    reelPlayOverlay.classList.remove('hidden');
+                    playBtnCircle.textContent = '▶';
                 } else {
-                    // 通常投稿の場合：動画を停止し、画像を表示
-                    modalVideo.classList.add('hidden');
-                    modalVideo.pause();
-                    modalVideo.src = '';
-                    
-                    const imgSrc = item.getAttribute('data-img');
-                    modalImg.classList.remove('hidden');
-                    modalImg.src = imgSrc;
+                    // 通常投稿は再生ボタン非表示ですぐズーム
+                    reelPlayOverlay.classList.add('hidden');
+                    modalImg.classList.add('animate-zoom');
+                    isPlaying = true;
                 }
 
                 modal.classList.remove('hidden');
@@ -372,12 +382,25 @@
             }
         });
 
+        // リール画像部分をクリックした時の再生/一時停止トグル
+        mediaContainer.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                modalImg.classList.add('animate-zoom');
+                playBtnCircle.textContent = '❚❚';
+                reelPlayOverlay.classList.add('opacity-0', 'hover:opacity-100');
+            } else {
+                modalImg.classList.remove('animate-zoom');
+                playBtnCircle.textContent = '▶';
+                reelPlayOverlay.classList.remove('opacity-0', 'hover:opacity-100');
+            }
+        });
+
         const closeFn = () => {
             modal.classList.remove('flex');
             modal.classList.add('hidden');
-            // モーダルを閉じるときに動画を停止・リセット
-            modalVideo.pause();
-            modalVideo.src = '';
+            modalImg.classList.remove('animate-zoom');
+            isPlaying = false;
             document.body.style.overflow = 'auto';
         };
 

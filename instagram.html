@@ -230,12 +230,12 @@
                 ✕
             </button>
 
-            <!-- Modal Left: Media Viewer (Zoom Animation with Play/Pause Button) -->
-            <div id="mediaContainer" class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh] overflow-hidden cursor-pointer" title="クリックして再生/一時停止">
+            <!-- Modal Left: Media Viewer (Zoom Animation with Hover-only Pause Button) -->
+            <div id="mediaContainer" class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh] overflow-hidden cursor-pointer group" title="クリックして再生/一時停止">
                 <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-cover transition-transform duration-700">
                 
-                <!-- Reel Play Overlay Button -->
-                <div id="reelPlayOverlay" class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition">
+                <!-- Reel Play/Pause Overlay Button (Visible on hover when playing) -->
+                <div id="reelPlayOverlay" class="absolute inset-0 flex items-center justify-center bg-black/20 transition opacity-0 group-hover:opacity-100">
                     <div id="playBtnCircle" class="w-16 h-16 rounded-full bg-black/60 text-white flex items-center justify-center text-2xl pl-1 shadow-lg backdrop-blur-sm transition transform hover:scale-110">▶</div>
                 </div>
             </div>
@@ -362,18 +362,17 @@
                 modalLikes.textContent = likes;
                 modalTime.textContent = time;
 
-                // 初期状態としてアニメーション停止
-                isPlaying = false;
-                modalImg.classList.remove('animate-zoom');
-
                 if (isReel === 'true') {
-                    reelPlayOverlay.classList.remove('hidden');
+                    // リール：初期状態は停止中（再生ボタンが常時表示）
+                    isPlaying = false;
+                    modalImg.classList.remove('animate-zoom');
+                    reelPlayOverlay.classList.remove('opacity-0'); // 停止中はボタンを表示
                     playBtnCircle.textContent = '▶';
                 } else {
-                    // 通常投稿は再生ボタン非表示ですぐズーム
-                    reelPlayOverlay.classList.add('hidden');
-                    modalImg.classList.add('animate-zoom');
+                    // 通常投稿：すぐにズームイン
                     isPlaying = true;
+                    modalImg.classList.add('animate-zoom');
+                    reelPlayOverlay.classList.add('opacity-0');
                 }
 
                 modal.classList.remove('hidden');
@@ -382,17 +381,17 @@
             }
         });
 
-        // リール画像部分をクリックした時の再生/一時停止トグル
+        // メディア部分をクリックしたときの再生/一時停止切り替え
         mediaContainer.addEventListener('click', () => {
             isPlaying = !isPlaying;
             if (isPlaying) {
                 modalImg.classList.add('animate-zoom');
                 playBtnCircle.textContent = '❚❚';
-                reelPlayOverlay.classList.add('opacity-0', 'hover:opacity-100');
+                reelPlayOverlay.classList.add('opacity-0'); // 再生中はホバー時のみ表示
             } else {
                 modalImg.classList.remove('animate-zoom');
                 playBtnCircle.textContent = '▶';
-                reelPlayOverlay.classList.remove('opacity-0', 'hover:opacity-100');
+                reelPlayOverlay.classList.remove('opacity-0'); // 停止中は常時表示
             }
         });
 

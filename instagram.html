@@ -89,25 +89,36 @@
             </div>
         </div>
 
-        <!-- Highlights / Stories Reel -->
+        <!-- Highlights / Stories Reel (Clickable) -->
         <div class="flex gap-6 py-6 overflow-x-auto border-b border-igBorder justify-start md:justify-center">
-            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+            <div class="highlight-item flex flex-col items-center gap-1.5 cursor-pointer group"
+                 data-title="限定メニュー"
+                 data-img="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=800&auto=format&fit=crop"
+                 data-desc="現在販売中の期間限定バーガーや、季節のトッピングメニューをご紹介！数に限りがありますのでお早めに✨">
+                <div class="w-16 h-16 rounded-full p-[2px] border-2 border-igBlue bg-gray-50 flex items-center justify-center overflow-hidden group-hover:scale-105 transition">
                     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
                 </div>
-                <span class="text-xs text-igGray">限定メニュー</span>
+                <span class="text-xs text-black font-medium">限定メニュー</span>
             </div>
-            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+            
+            <div class="highlight-item flex flex-col items-center gap-1.5 cursor-pointer group"
+                 data-title="店内の雰囲気"
+                 data-img="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop"
+                 data-desc="白と黒を基調とした落ち着いた店内。カウンター席やテーブル席でゆったりとお食事をお楽しみいただけます☕️">
+                <div class="w-16 h-16 rounded-full p-[2px] border-2 border-igBlue bg-gray-50 flex items-center justify-center overflow-hidden group-hover:scale-105 transition">
                     <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
                 </div>
-                <span class="text-xs text-igGray">店内の雰囲気</span>
+                <span class="text-xs text-black font-medium">店内の雰囲気</span>
             </div>
-            <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-                <div class="w-16 h-16 rounded-full p-[2px] border border-igBorder bg-gray-50 flex items-center justify-center overflow-hidden">
+
+            <div class="highlight-item flex flex-col items-center gap-1.5 cursor-pointer group"
+                 data-title="アクセス"
+                 data-img="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=800&auto=format&fit=crop"
+                 data-desc="東急東横線・大井町線「自由が丘駅」南口より徒歩5分、目黒線「奥沢駅」より徒歩3分です📍 お気軽にお越しください！">
+                <div class="w-16 h-16 rounded-full p-[2px] border-2 border-igBlue bg-gray-50 flex items-center justify-center overflow-hidden group-hover:scale-105 transition">
                     <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover rounded-full">
                 </div>
-                <span class="text-xs text-igGray">アクセス</span>
+                <span class="text-xs text-black font-medium">アクセス</span>
             </div>
         </div>
 
@@ -222,7 +233,7 @@
         </div>
     </main>
 
-    <!-- Modal Popup for Post/Reel Detail -->
+    <!-- Modal Popup for Post/Reel/Highlight Detail -->
     <div id="postModal" class="fixed inset-0 z-50 bg-black/70 hidden items-center justify-center p-4">
         <div class="bg-white w-full max-w-4xl rounded-lg overflow-hidden flex flex-col md:flex-row relative shadow-2xl max-h-[90vh]">
             <!-- Close Button -->
@@ -230,11 +241,9 @@
                 ✕
             </button>
 
-            <!-- Modal Left: Media Viewer (Zoom Animation with Hover-only Button) -->
+            <!-- Modal Left: Media Viewer -->
             <div id="mediaContainer" class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh] overflow-hidden cursor-pointer group" title="クリックして再生/一時停止">
-                <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-cover transition-transform duration-700">
-                
-                <!-- Reel Play/Pause Overlay Button (Hidden by default, shown ONLY on hover for both playing and paused states) -->
+                <img id="modalImg" src="" alt="Detail" class="w-full h-full object-cover transition-transform duration-700">
                 <div id="reelPlayOverlay" class="absolute inset-0 flex items-center justify-center bg-black/20 transition opacity-0 group-hover:opacity-100">
                     <div id="playBtnCircle" class="w-16 h-16 rounded-full bg-black/60 text-white flex items-center justify-center text-2xl pl-1 shadow-lg backdrop-blur-sm transition transform hover:scale-110">▶</div>
                 </div>
@@ -259,29 +268,7 @@
                         </div>
                         <div>
                             <p><span class="font-semibold mr-2">sunrise_burger_jiyugaoka</span><span id="modalCaption" class="text-gray-800"></span></p>
-                            <span id="modalTime" class="text-xs text-igGray mt-1 block"></span>
-                        </div>
-                    </div>
-
-                    <!-- Sample User Comment 1 -->
-                    <div class="flex items-start gap-3 pt-2">
-                        <div class="w-7 h-7 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <p class="text-xs"><span class="font-semibold mr-2">jiyugaoka_gourmet</span>肉汁がすごくて本当に美味しかったです！また行きます✨</p>
-                            <span class="text-[10px] text-igGray mt-0.5 block">1日前</span>
-                        </div>
-                    </div>
-
-                    <!-- Sample User Comment 2 -->
-                    <div class="flex items-start gap-3 pt-2">
-                        <div class="w-7 h-7 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <p class="text-xs"><span class="font-semibold mr-2">burger_lover_tokyo</span>バンズが香ばしくて最高でした🍔ごちそうさまです！</p>
-                            <span class="text-[10px] text-igGray mt-0.5 block">2日前</span>
+                            <span id="modalTime" class="text-xs text-igGray mt-1 block">ストーリーハイライト</span>
                         </div>
                     </div>
                 </div>
@@ -293,10 +280,10 @@
                         <button class="hover:text-gray-600 transition">💬</button>
                         <button class="hover:text-gray-600 transition">✈️</button>
                     </div>
-                    <p class="text-xs font-semibold mb-1">「いいね！」<span id="modalLikes"></span>件</p>
+                    <p class="text-xs font-semibold mb-1">ハイライトストーリー</p>
                     <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
-                        <input type="text" placeholder="コメントを追加..." class="w-full text-xs outline-none bg-transparent py-1">
-                        <button class="text-xs font-semibold text-igBlue hover:opacity-80">投稿</button>
+                        <input type="text" placeholder="メッセージを送信..." class="w-full text-xs outline-none bg-transparent py-1">
+                        <button class="text-xs font-semibold text-igBlue hover:opacity-80">送信</button>
                     </div>
                 </div>
             </div>
@@ -308,7 +295,7 @@
         <p>© 2026 SUNRISE BURGER from Instagram</p>
     </footer>
 
-    <!-- JavaScript for Tabs & Animation Controls -->
+    <!-- JavaScript for Tabs, Highlights & Animation Controls -->
     <script>
         // Tab Switching Functionality
         const tabButtons = document.querySelectorAll('.tab-btn');
@@ -335,7 +322,7 @@
             });
         });
 
-        // Modal functionality for Posts & Reels Animation
+        // Modal functionality for Posts, Reels & Highlights
         const modal = document.getElementById('postModal');
         const modalImg = document.getElementById('modalImg');
         const modalCaption = document.getElementById('modalCaption');
@@ -348,29 +335,33 @@
 
         let isPlaying = false;
 
+        // Post / Reel click handler
         document.addEventListener('click', (e) => {
-            const item = e.target.closest('.post-item');
+            const item = e.target.closest('.post-item') || e.target.closest('.highlight-item');
             if (item) {
                 const imgSrc = item.getAttribute('data-img');
-                const caption = item.getAttribute('data-caption');
+                const caption = item.getAttribute('data-caption') || item.getAttribute('data-desc');
                 const likes = item.getAttribute('data-likes');
-                const time = item.getAttribute('data-time');
+                const time = item.getAttribute('data-time') || 'ハイライト';
                 const isReel = item.getAttribute('data-is-reel');
+                const isHighlight = item.classList.contains('highlight-item');
 
                 modalImg.src = imgSrc;
                 modalCaption.textContent = caption;
-                modalLikes.textContent = likes;
-                modalTime.textContent = time;
+                if(modalLikes) modalLikes.textContent = likes || '---';
+                if(modalTime) modalTime.textContent = time;
 
-                if (isReel === 'true') {
-                    // リール：初期状態は停止中（再生ボタンをホバー時のみ表示するようグループに任せる）
+                if (isReel === 'true' || isHighlight) {
+                    // リールまたはハイライトの場合：ストーリー風に再生ボタン付きズーム演出
                     isPlaying = false;
                     modalImg.classList.remove('animate-zoom');
                     playBtnCircle.textContent = '▶';
+                    reelPlayOverlay.style.display = 'flex';
                 } else {
                     // 通常投稿：すぐにズームイン
                     isPlaying = true;
                     modalImg.classList.add('animate-zoom');
+                    reelPlayOverlay.style.display = 'none';
                 }
 
                 modal.classList.remove('hidden');

@@ -167,7 +167,7 @@
         <!-- TAB CONTENT: リール (Reels Vertical Grid with Play Icon & Video Badge) -->
         <div id="tab-reels" class="tab-content hidden grid grid-cols-3 gap-1 md:gap-7 mt-4">
             <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
-                 data-img="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop"
+                 data-video="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
                  data-caption="【リール動画】鉄板でジューシーに焼き上げる黒毛和牛100%パティの音をお届け！🔥🎵 #リール #ハンバーガー"
                  data-likes="1,420"
                  data-time="3日前"
@@ -185,7 +185,7 @@
             </div>
 
             <div class="aspect-[9/16] bg-gray-900 overflow-hidden group relative cursor-pointer post-item rounded-md"
-                 data-img="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop"
+                 data-video="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
                  data-caption="【リール動画】朝焼き立ての自家製バンズができるまで🍞✨職人のこだわりをチラ見せ！"
                  data-likes="890"
                  data-time="1週間前"
@@ -222,13 +222,10 @@
                 ✕
             </button>
 
-            <!-- Modal Left: Media Viewer (Image or Simulated Video Player) -->
+            <!-- Modal Left: Media Viewer (Image or Video Player) -->
             <div class="w-full md:w-3/5 bg-black flex items-center justify-center relative max-h-[50vh] md:max-h-[85vh]">
                 <img id="modalImg" src="" alt="Post Detail" class="w-full h-full object-contain">
-                <!-- Video play simulation badge for reels -->
-                <div id="reelBadge" class="absolute inset-0 flex items-center justify-center bg-black/30 hidden pointer-events-none">
-                    <div class="w-16 h-16 rounded-full bg-black/60 text-white flex items-center justify-center text-2xl pl-1 shadow-lg">▶</div>
-                </div>
+                <video id="modalVideo" src="" class="w-full h-full object-contain hidden" controls autoplay loop playsinline></video>
             </div>
 
             <!-- Modal Right: Comments & Info -->
@@ -329,32 +326,40 @@
         // Modal functionality for Posts & Reels
         const modal = document.getElementById('postModal');
         const modalImg = document.getElementById('modalImg');
+        const modalVideo = document.getElementById('modalVideo');
         const modalCaption = document.getElementById('modalCaption');
         const modalLikes = document.getElementById('modalLikes');
         const modalTime = document.getElementById('modalTime');
-        const reelBadge = document.getElementById('reelBadge');
         const closeModal = document.getElementById('closeModal');
 
         document.addEventListener('click', (e) => {
             const item = e.target.closest('.post-item');
             if (item) {
-                const imgSrc = item.getAttribute('data-img');
                 const caption = item.getAttribute('data-caption');
                 const likes = item.getAttribute('data-likes');
                 const time = item.getAttribute('data-time');
                 const isReel = item.getAttribute('data-is-reel');
 
-                modalImg.src = imgSrc;
                 modalCaption.textContent = caption;
                 modalLikes.textContent = likes;
                 modalTime.textContent = time;
 
                 if (isReel === 'true') {
-                    reelBadge.classList.remove('hidden');
-                    reelBadge.classList.add('flex');
+                    // リールの場合：動画プレイヤーを表示して再生
+                    const videoSrc = item.getAttribute('data-video');
+                    modalImg.classList.add('hidden');
+                    modalImg.src = '';
+                    modalVideo.classList.remove('hidden');
+                    modalVideo.src = videoSrc;
+                    modalVideo.play();
                 } else {
-                    reelBadge.classList.remove('flex');
-                    reelBadge.classList.add('hidden');
+                    // 通常投稿の場合：画像を表示
+                    const imgSrc = item.getAttribute('data-img');
+                    modalVideo.classList.add('hidden');
+                    modalVideo.pause();
+                    modalVideo.src = '';
+                    modalImg.classList.remove('hidden');
+                    modalImg.src = imgSrc;
                 }
 
                 modal.classList.remove('hidden');
@@ -366,6 +371,9 @@
         const closeFn = () => {
             modal.classList.remove('flex');
             modal.classList.add('hidden');
+            // モーダルを閉じるときに動画を停止・リセット
+            modalVideo.pause();
+            modalVideo.src = '';
             document.body.style.overflow = 'auto';
         };
 

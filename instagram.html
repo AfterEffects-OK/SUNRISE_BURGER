@@ -62,8 +62,12 @@
             <div class="flex-grow text-center md:text-left">
                 <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
                     <h1 class="text-xl font-normal text-black">sunrise_burger_jiyugaoka</h1>
-                    <div class="flex gap-2">
-                        <a href="order.html" class="bg-igBlue text-white text-xs font-semibold px-4 py-1.5 rounded-lg hover:bg-[#1877f2] transition">
+                    <div class="flex items-center gap-2 flex-wrap justify-center md:justify-start">
+                        <!-- Instagram風フォローボタン -->
+                        <button id="followBtn" class="bg-igBlue text-white text-xs font-semibold px-5 py-1.5 rounded-lg hover:bg-[#1877f2] transition">
+                            フォローする
+                        </button>
+                        <a href="order.html" class="bg-gray-100 text-black text-xs font-semibold px-4 py-1.5 rounded-lg hover:bg-gray-200 transition">
                             オンライン注文
                         </a>
                         <button class="bg-gray-100 text-black text-xs font-semibold px-4 py-1.5 rounded-lg hover:bg-gray-200 transition">
@@ -75,7 +79,7 @@
                 <!-- Stats -->
                 <div class="flex justify-center md:justify-start gap-10 text-sm mb-4 text-black">
                     <span>投稿 <strong class="font-semibold">54</strong></span>
-                    <span>フォロワー <strong class="font-semibold">1,280</strong></span>
+                    <span>フォロワー <strong id="followerCount" class="font-semibold">1,280</strong></span>
                     <span>フォロー中 <strong class="font-semibold">150</strong></span>
                 </div>
 
@@ -343,6 +347,27 @@
             });
         });
 
+        // Follow Button Interactive Logic (Instagram Style)
+        const followBtn = document.getElementById('followBtn');
+        const followerCountEl = document.getElementById('followerCount');
+        let isFollowing = false;
+        const baseFollowers = 1280;
+
+        followBtn.addEventListener('click', () => {
+            isFollowing = !isFollowing;
+            if (isFollowing) {
+                // フォロー中状態
+                followBtn.textContent = 'フォロー中';
+                followBtn.className = 'bg-gray-100 text-black text-xs font-semibold px-5 py-1.5 rounded-lg hover:bg-gray-200 transition';
+                followerCountEl.textContent = (baseFollowers + 1).toLocaleString();
+            } else {
+                // 未フォロー状態に戻す
+                followBtn.textContent = 'フォローする';
+                followBtn.className = 'bg-igBlue text-white text-xs font-semibold px-5 py-1.5 rounded-lg hover:bg-[#1877f2] transition';
+                followerCountEl.textContent = baseFollowers.toLocaleString();
+            }
+        });
+
         // Modal functionality for Posts, Reels & Highlights
         const modal = document.getElementById('postModal');
         const modalImg = document.getElementById('modalImg');
@@ -460,7 +485,7 @@
             return str.replace(/[&'`<>]/g, function(match) {
                 return {
                     '&': '&amp;',
-                    'prime': '&#x27;',
+                    "'": '&#x27;',
                     '`': '&#x60;',
                     '<': '&lt;',
                     '>': '&gt;',

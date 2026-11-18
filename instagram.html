@@ -196,7 +196,6 @@
                  data-time="1ヶ月前">
                 <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:brightness-90 transition">
             </div>
-            <!-- クラフトビールの投稿画像（表示安定版のビール画像） -->
             <div class="aspect-square bg-gray-100 overflow-hidden group relative cursor-pointer post-item"
                  data-img="https://images.unsplash.com/photo-1535958636474-b021ee887b13?q=80&w=800&auto=format&fit=crop"
                  data-caption="ディナータイム限定のクラフトビール各種。こだわりバーガーとのペアリングをぜひお楽しみください🍻 #サンライズバーガー #自由が丘グルメ #ハンバーガー"
@@ -282,7 +281,7 @@
                 </div>
 
                 <!-- Comments Scrollable Area -->
-                <div class="flex-grow p-4 overflow-y-auto space-y-4 text-sm">
+                <div id="commentsContainer" class="flex-grow p-4 overflow-y-auto space-y-4 text-sm">
                     <!-- Main Caption -->
                     <div class="flex items-start gap-3">
                         <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
@@ -298,14 +297,14 @@
                 <!-- Likes & Action Bar -->
                 <div class="p-4 border-t border-igBorder bg-white">
                     <div class="flex items-center gap-4 mb-2 text-xl">
-                        <button class="hover:text-red-500 transition">♡</button>
+                        <button id="likeBtn" class="transition text-black hover:opacity-70 focus:outline-none">♡</button>
                         <button class="hover:text-gray-600 transition">💬</button>
                         <button class="hover:text-gray-600 transition">✈️</button>
                     </div>
                     <p class="text-xs font-semibold mb-1">「いいね！」<span id="modalLikes"></span>件</p>
                     <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
-                        <input type="text" placeholder="メッセージを送信..." class="w-full text-xs outline-none bg-transparent py-1">
-                        <button class="text-xs font-semibold text-igBlue hover:opacity-80">送信</button>
+                        <input id="commentInput" type="text" placeholder="コメントを追加..." class="w-full text-xs outline-none bg-transparent py-1">
+                        <button id="commentSubmit" class="text-xs font-semibold text-igBlue hover:opacity-80">投稿</button>
                     </div>
                 </div>
             </div>
@@ -317,7 +316,7 @@
         <p>© 2026 SUNRISE BURGER from Instagram</p>
     </footer>
 
-    <!-- JavaScript for Tabs, Highlights & Animation Controls -->
+    <!-- JavaScript for Tabs, Highlights & Interactive Buttons -->
     <script>
         // Tab Switching Functionality
         const tabButtons = document.querySelectorAll('.tab-btn');
@@ -355,32 +354,44 @@
         const playBtnCircle = document.getElementById('playBtnCircle');
         const closeModal = document.getElementById('closeModal');
 
+        // Interactive Elements
+        const likeBtn = document.getElementById('likeBtn');
+        const commentInput = document.getElementById('commentInput');
+        const commentSubmit = document.getElementById('commentSubmit');
+        const commentsContainer = document.getElementById('commentsContainer');
+
+        let currentActiveItem = null;
+        let isLiked = false;
+        let baseLikesCount = 0;
         let isPlaying = false;
 
         // Post / Reel click handler
         document.addEventListener('click', (e) => {
             const item = e.target.closest('.post-item') || e.target.closest('.highlight-item');
             if (item) {
+                currentActiveItem = item;
                 const imgSrc = item.getAttribute('data-img');
                 const caption = item.getAttribute('data-caption') || item.getAttribute('data-desc');
-                const likes = item.getAttribute('data-likes');
+                const likes = item.getAttribute('data-likes') || '350';
                 const time = item.getAttribute('data-time') || 'ハイライト';
                 const isReel = item.getAttribute('data-is-reel');
                 const isHighlight = item.classList.contains('highlight-item');
 
                 modalImg.src = imgSrc;
                 modalCaption.textContent = caption;
-                if(modalLikes) modalLikes.textContent = likes || '---';
+                
+                baseLikesCount = parseInt(likes.replace(/,/g, ''), 10) || 350;
+                isLiked = item.classList.contains('user-liked');
+                updateLikeButtonState();
+
                 if(modalTime) modalTime.textContent = time;
 
                 if (isReel === 'true' || isHighlight) {
-                    // リールまたはハイライトの場合：ストーリー風に再生ボタン付きズーム演出
                     isPlaying = false;
                     modalImg.classList.remove('animate-zoom');
                     playBtnCircle.textContent = '▶';
                     reelPlayOverlay.style.display = 'flex';
                 } else {
-                    // 通常投稿：すぐにズームイン
                     isPlaying = true;
                     modalImg.classList.add('animate-zoom');
                     reelPlayOverlay.style.display = 'none';
@@ -391,6 +402,71 @@
                 document.body.style.overflow = 'hidden';
             }
         });
+
+        // いいねボタンのトグル処理
+        function updateLikeButtonState() {
+            if (isLiked) {
+                likeBtn.textContent = '❤️';
+                likeBtn.className = 'transition text-red-500 hover:opacity-70 focus:outline-none scale-110';
+                modalLikes.textContent = (baseLikesCount + 1).toLocaleString();
+            } else {
+                likeBtn.textContent = '♡';
+                likeBtn.className = 'transition text-black hover:opacity-70 focus:outline-none';
+                modalLikes.textContent = baseLikesCount.toLocaleString();
+            }
+        }
+
+        likeBtn.addEventListener('click', () => {
+            isLiked = !isLiked;
+            if (currentActiveItem) {
+                if (isLiked) {
+                    currentActiveItem.classList.add('user-liked');
+                } else {
+                    currentActiveItem.classList.remove('user-liked');
+                }
+            }
+            updateLikeButtonState();
+        });
+
+        // コメント投稿処理
+        function postComment() {
+            const text = commentInput.value.trim();
+            if (!text) return;
+
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'flex items-start gap-3 mt-3';
+            commentDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <p><span class="font-semibold mr-2">guest_user</span><span class="text-gray-800">${escapeHtml(text)}</span></p>
+                    <span class="text-xs text-igGray mt-0.5 block">たった今</span>
+                </div>
+            `;
+            commentsContainer.appendChild(commentDiv);
+            commentInput.value = '';
+            commentsContainer.scrollTop = commentsContainer.scrollHeight;
+        }
+
+        commentSubmit.addEventListener('click', postComment);
+        commentInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                postComment();
+            }
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/[&'`<>]/g, function(match) {
+                return {
+                    '&': '&amp;',
+                    'prime': '&#x27;',
+                    '`': '&#x60;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                }[match]
+            });
+        }
 
         // メディア部分をクリックしたときの再生/一時停止切り替え
         mediaContainer.addEventListener('click', () => {

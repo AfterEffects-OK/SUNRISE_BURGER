@@ -614,9 +614,9 @@
       <div class="rating-summary">
         <div class="main-score">
           <span class="stars">★★★★☆</span>
-          <span class="score-num">3.68</span>
+          <span class="score-num">3.74</span>
         </div>
-        <div class="stat-item">口コミ <strong id="reviewCount">3</strong>件</div>
+        <div class="stat-item">口コミ <strong id="reviewCount">10</strong>件</div>
         <div class="stat-item">保存 <strong id="saveCount">428</strong>件</div>
       </div>
 
@@ -631,7 +631,7 @@
       <div class="shop-tabs">
         <div class="shop-tab" data-target="tab-top" onclick="switchTab('tab-top', this)">店舗トップ</div>
         <div class="shop-tab" data-target="tab-menu" onclick="switchTab('tab-menu', this)">メニュー</div>
-        <div class="shop-tab active" data-target="tab-reviews" onclick="switchTab('tab-reviews', this)">口コミ (<span id="tabReviewCount">3</span>)</div>
+        <div class="shop-tab active" data-target="tab-reviews" onclick="switchTab('tab-reviews', this)">口コミ (<span id="tabReviewCount">10</span>)</div>
         <div class="shop-tab" data-target="tab-map" onclick="switchTab('tab-map', this)">地図</div>
       </div>
     </div>
@@ -672,7 +672,7 @@
           <p style="color:var(--text-muted); font-size:12px;">
             まず驚いたのがパティの肉々しさ。国産黒毛和牛100%の粗挽きブレンドとのことで、噛むたびにステーキのような力強い旨味とジューシーな肉汁が溢れ出します...
           </p>
-          <span class="btn-link-more" onclick="switchTabByName('tab-reviews')">▶ すべての口コミ（3件）を見る</span>
+          <span class="btn-link-more" onclick="switchTabByName('tab-reviews')">▶ すべての口コミ（<span id="topReviewCount">10</span>件）を見る</span>
         </div>
       </section>
 
@@ -733,7 +733,7 @@
       <section id="tab-reviews" class="tab-panel active">
         <div class="review-controls">
           <div class="filter-group">
-            <button class="filter-btn active" onclick="filterReviews('all', this)">すべて</button>
+            <button class="filter-btn active" onclick="filterReviews('all', this)">すべて (10)</button>
             <button class="filter-btn" onclick="filterReviews('lunch', this)">☀ ランチ</button>
             <button class="filter-btn" onclick="filterReviews('dinner', this)">☾ ディナー</button>
           </div>
@@ -776,7 +776,7 @@
           <button class="btn-post-review" onclick="addReview()">投稿を公開する</button>
         </div>
 
-        <!-- 口コミリスト -->
+        <!-- 口コミリスト（全10件） -->
         <div id="reviewList">
           <!-- 口コミ1 -->
           <article class="review-card" data-time="lunch">
@@ -852,6 +852,174 @@
             <div class="review-footer">
               <span>使った金額：￥1,000～￥1,999</span>
               <button class="btn-like" onclick="likeReview(this)">いいね！ <span>9</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ4 -->
+          <article class="review-card" data-time="dinner">
+            <div class="reviewer-info">
+              <div class="avatar">麦</div>
+              <div>
+                <div class="reviewer-name">クラフトビール放浪記 <span class="reviewer-badge">（口コミ 429件）</span></div>
+                <div class="reviewer-badge">2026年10月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-dinner">☾ ディナー</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">4.0</span>
+              <span class="sub-scores">[ 料理・味 4.2 | サービス 3.8 | 雰囲気 4.1 | CP 3.6 | 酒・ドリンク 4.0 ]</span>
+            </div>
+            <h2 class="review-title">スモーキーベーコン・エッグとIPAのペアリングが最高すぎる</h2>
+            <p class="review-body">金曜の夜に一人飲みがてら訪問。「スモーキーベーコン・エッグバーガー（1,580円）」にクラフトビールのIPA（850円）を合わせました。
+自家製スモークベーコンの香ばしい燻製香と半熟卵のコク、そこに黒毛和牛の脂の甘みが重なり、ホップの苦味が効いたIPAとの相性が抜群です。カウンター席もあるので一人でも気兼ねなく過ごせました。</p>
+            <div class="review-footer">
+              <span>使った金額：￥2,000～￥2,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>19</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ5 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">奥</div>
+              <div>
+                <div class="reviewer-name">おくさわ散歩日和 <span class="reviewer-badge">（口コミ 95件）</span></div>
+                <div class="reviewer-badge">2026年10月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">3.8</span>
+              <span class="sub-scores">[ 料理・味 4.0 | サービス 3.9 | 雰囲気 3.8 | CP 3.7 ]</span>
+            </div>
+            <h2 class="review-title">オンライン予約で待ち時間ゼロ！テイクアウトでもバンズがふっくら</h2>
+            <p class="review-body">在宅ワークのランチに公式サイトから事前注文してテイクアウトしました。指定時間通りに行くと熱々の状態で受け取れてストレスフリー。
+持ち帰って15分ほど経ってから食べましたが、自家製バンズがへたらずふっくらしたままなのがすごい！皮付きポテトのハーブソルトも冷めても美味しくてリピート確定です。</p>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>12</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ6 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">B</div>
+              <div>
+                <div class="reviewer-name">Burger_Lover_TYO <span class="reviewer-badge">（口コミ 512件）</span></div>
+                <div class="reviewer-badge">2026年9月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">4.2</span>
+              <span class="sub-scores">[ 料理・味 4.4 | サービス 4.0 | 雰囲気 4.1 | CP 3.8 ]</span>
+            </div>
+            <h2 class="review-title">都内のグルメバーガーの中でもパティの火入れがトップクラス</h2>
+            <p class="review-body">東横線沿線のハンバーガー屋は一通り巡っていますが、ここは「肉そのものの質」が頭一つ抜けています。
+つなぎなしの粗挽き黒毛和牛パティは、表面は香ばしく焼き上げられ、中心部はほんのりレア感を残した絶妙な火入れ。特製ソースも主張しすぎず肉の甘みを引き立てる名脇役です。</p>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>31</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ7 -->
+          <article class="review-card" data-time="dinner">
+            <div class="reviewer-info">
+              <div class="avatar">マ</div>
+              <div>
+                <div class="reviewer-name">マロンとカフェ巡り <span class="reviewer-badge">（口コミ 140件）</span></div>
+                <div class="reviewer-badge">2026年9月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-dinner">☾ ディナー</span>
+              <span class="stars" style="font-size:15px;">★★★☆☆</span>
+              <span class="review-score-val">3.7</span>
+              <span class="sub-scores">[ 料理・味 3.8 | サービス 3.7 | 雰囲気 4.0 | CP 3.4 ]</span>
+            </div>
+            <h2 class="review-title">自由が丘ショッピング帰りのディナーにぴったりな落ち着いた空間</h2>
+            <p class="review-body">自由が丘で買い物を楽しんだあと、少し歩いて奥沢のこちらへ。駅前の喧騒から離れていて、インテリアもシックで落ち着きます。
+店員さんがバーガー袋の使い方やおすすめの食べ方を丁寧に案内してくれて親切でした。女性一人でも入りやすい綺麗なお店です。</p>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>8</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ8 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">K</div>
+              <div>
+                <div class="reviewer-name">kenji_gourmet <span class="reviewer-badge">（口コミ 78件）</span></div>
+                <div class="reviewer-badge">2026年8月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★☆☆</span>
+              <span class="review-score-val">3.5</span>
+              <span class="sub-scores">[ 料理・味 3.8 | サービス 3.4 | 雰囲気 3.6 | CP 3.3 ]</span>
+            </div>
+            <h2 class="review-title">休日の昼は少し並ぶことも。早めの時間帯の訪問がおすすめ</h2>
+            <p class="review-body">日曜日の12時半頃に伺ったところ、店内満席で15分ほど待ちました。回転は比較的スムーズですが、確実にすぐ入りたいなら11時台の訪問が良さそうです。
+味に関しては文句なし！グリルオニオンの甘みがしっかり引き出されていて、クラシックバーガーの完成度が非常に高いです。</p>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>11</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ9 -->
+          <article class="review-card" data-time="dinner">
+            <div class="reviewer-info">
+              <div class="avatar">セ</div>
+              <div>
+                <div class="reviewer-name">世田谷ライフ満喫中 <span class="reviewer-badge">（口コミ 215件）</span></div>
+                <div class="reviewer-badge">2026年8月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-dinner">☾ ディナー</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">3.9</span>
+              <span class="sub-scores">[ 料理・味 4.0 | サービス 3.9 | 雰囲気 3.9 | CP 3.7 ]</span>
+            </div>
+            <h2 class="review-title">夫婦でシェアして2種類堪能！チーズ系とアボカド系の組み合わせが鉄板</h2>
+            <p class="review-body">夫と2人でディナー訪問。「クワトロチーズの雪解けバーガー」と「アボカド・クリーンバーガー」を頼んで半分ずつシェアしました。
+濃厚なクワトロチーズと、さっぱりクリーミーなアボカドのコントラストが最高で、2種類頼むと満足度が倍増します。また季節限定メニューが変わる頃に伺いたいです。</p>
+            <div class="review-footer">
+              <span>使った金額：￥2,000～￥2,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>14</span></button>
+            </div>
+          </article>
+
+          <!-- 口コミ10 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">パ</div>
+              <div>
+                <div class="reviewer-name">パンと肉が好き <span class="reviewer-badge">（口コミ 43件）</span></div>
+                <div class="reviewer-badge">2026年7月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">3.8</span>
+              <span class="sub-scores">[ 料理・味 3.9 | サービス 3.8 | 雰囲気 3.8 | CP 3.6 ]</span>
+            </div>
+            <h2 class="review-title">主役級の自家製バンズ！小麦の香ばしさと歯切れの良さに感動</h2>
+            <p class="review-body">ハンバーガーはバンズ重視派ですが、ここは毎朝店で焼いているだけあってパン自体が本当に美味しいです。
+鉄板で軽くトーストされた断面のサクッと感と、クラムのしっとり感のバランスが絶妙で、最後まで肉汁でベチャッとならずに美味しく食べきれました。</p>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>17</span></button>
             </div>
           </article>
         </div>
@@ -1051,9 +1219,11 @@
       // 件数更新
       const countEl = document.getElementById('reviewCount');
       const tabCountEl = document.getElementById('tabReviewCount');
+      const topCountEl = document.getElementById('topReviewCount');
       const nextCount = parseInt(countEl.textContent, 10) + 1;
       countEl.textContent = nextCount;
       tabCountEl.textContent = nextCount;
+      if (topCountEl) topCountEl.textContent = nextCount;
 
       // フォームリセット
       document.getElementById('inputTitle').value = '';

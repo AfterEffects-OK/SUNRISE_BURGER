@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サンライズバーガー （SUNRISE BURGER） - 自由が丘/ハンバーガー [グルメ口コミ]</title>
+  <style>
+    :root {
+      --main-orange: #ff9600;
+      --dark-orange: #e68600;
+      --star-red: #e60012;
+      --bg-beige: #f6f4ef;
+      --border-gray: #e1dfd9;
+      --text-dark: #333333;
+      --text-muted: #767676;
+      --link-blue: #0066cc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background-color: var(--bg-beige);
+      color: var(--text-dark);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--link-blue);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ヘッダー */
+    .global-header {
+      background: #fff;
+      border-bottom: 2px solid var(--main-orange);
+    }
+    .header-inner {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--main-orange);
+      letter-spacing: 0.05em;
+    }
+    .site-logo span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: normal;
+      margin-left: 8px;
+    }
+    .search-bar {
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .search-bar input {
+      border: none;
+      padding: 6px 10px;
+      font-size: 12px;
+      width: 180px;
+      outline: none;
+    }
+    .search-bar input:first-child {
+      border-right: 1px solid #eee;
+    }
+    .search-bar button {
+      background: var(--main-orange);
+      color: #fff;
+      border: none;
+      padding: 0 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* パンくず */
+    .breadcrumb {
+      max-width: 1020px;
+      margin: 8px auto;
+      padding: 0 15px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 店舗ヘッダーエリア */
+    .shop-header-wrap {
+      background: #fff;
+      border-top: 1px solid var(--border-gray);
+      border-bottom: 1px solid var(--border-gray);
+    }
+    .shop-header {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 20px 15px 0;
+    }
+    .shop-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .shop-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #111;
+    }
+    .shop-name small {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: normal;
+      margin-left: 8px;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-save {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 6px 14px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-save.saved {
+      background: #fff8eb;
+      border-color: var(--main-orange);
+      color: var(--dark-orange);
+    }
+
+    /* 評価スコア行 */
+    .rating-summary {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px dotted var(--border-gray);
+    }
+    .main-score {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stars {
+      color: var(--main-orange);
+      font-size: 20px;
+      letter-spacing: -2px;
+    }
+    .score-num {
+      font-size: 26px;
+      font-weight: bold;
+      color: var(--star-red);
+      line-height: 1;
+    }
+    .stat-item {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .stat-item strong {
+      font-size: 15px;
+      color: var(--text-dark);
+      margin: 0 2px;
+    }
+
+    /* 店舗メタ情報 */
+    .shop-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 10px 0;
+      font-size: 12px;
+    }
+    .meta-label {
+      font-weight: bold;
+      color: var(--text-muted);
+      margin-right: 6px;
+    }
+
+    /* ナビゲーションタブ */
+    .shop-tabs {
+      display: flex;
+      margin-top: 10px;
+      border-top: 1px solid var(--border-gray);
+    }
+    .shop-tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      font-weight: bold;
+      font-size: 14px;
+      color: var(--text-dark);
+      border-right: 1px solid var(--border-gray);
+      cursor: pointer;
+      background: #fafafa;
+    }
+    .shop-tab:first-child {
+      border-left: 1px solid var(--border-gray);
+    }
+    .shop-tab.active {
+      background: #fff;
+      color: var(--main-orange);
+      border-top: 3px solid var(--main-orange);
+      margin-top: -1px;
+    }
+
+    /* メイン2カラムレイアウト */
+    .container {
+      max-width: 1020px;
+      margin: 20px auto;
+      padding: 0 15px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .main-col {
+      flex: 1;
+      min-width: 0;
+    }
+    .side-col {
+      width: 300px;
+      flex-shrink: 0;
+    }
+
+    /* 口コミ絞り込み・投稿ボックス */
+    .review-controls {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-btn {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: #555;
+      color: #fff;
+      border-color: #555;
+    }
+    .btn-post-review {
+      background: #82b541;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 3px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-post-review:hover {
+      background: #72a136;
+    }
+
+    /* 口コミ投稿フォーム（初期非表示） */
+    .post-form-box {
+      display: none;
+      background: #fff;
+      border: 2px solid #82b541;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+    .post-form-box h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+    .form-row {
+      margin-bottom: 10px;
+    }
+    .form-row label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%;
+      padding: 7px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-family: inherit;
+    }
+
+    /* 口コミカード */
+    .review-card {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 12px;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0dcd3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #666;
+    }
+    .reviewer-name {
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .reviewer-badge {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .review-score-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #faf8f5;
+      padding: 8px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .time-badge {
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-weight: bold;
+      font-size: 11px;
+      color: #fff;
+    }
+    .time-lunch { background: #f39800; }
+    .time-dinner { background: #2c3e50; }
+    .review-score-val {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--star-red);
+    }
+    .sub-scores {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .review-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #111;
+    }
+    .review-body {
+      font-size: 13px;
+      line-height: 1.75;
+      white-space: pre-line;
+      margin-bottom: 14px;
+    }
+    .review-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dotted var(--border-gray);
+      padding-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .btn-like {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-like:hover {
+      background: #f9f9f9;
+    }
+
+    /* サイドバー */
+    .side-box {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .side-box h3 {
+      font-size: 14px;
+      border-left: 3px solid var(--main-orange);
+      padding-left: 8px;
+      margin-bottom: 12px;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .info-table th, .info-table td {
+      border-top: 1px solid #eee;
+      padding: 8px 4px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .info-table th {
+      width: 75px;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+    .pickup-menu-list li {
+      list-style: none;
+      border-bottom: 1px dotted #eee;
+      padding: 8px 0;
+    }
+    .pickup-menu-list li:last-child {
+      border-bottom: none;
+    }
+    .menu-price {
+      float: right;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+    .btn-official {
+      display: block;
+      text-align: center;
+      background: var(--main-orange);
+      color: #fff !important;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 3px;
+      margin-top: 10px;
+      text-decoration: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- グローバルヘッダー -->
+  <header class="global-header">
+    <div class="header-inner">
+      <div class="site-logo">グルメログ<span>全国のおすすめレストラン・口コミ検索</span></div>
+      <div class="search-bar">
+        <input type="text" value="自由が丘・奥沢" placeholder="エリア・駅">
+        <input type="text" value="ハンバーガー" placeholder="ジャンル・店名">
+        <button type="button">検索</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- パンくずリスト -->
+  <div class="breadcrumb">
+    東京グルメ &gt; 自由が丘・三軒茶屋・二子玉川 &gt; 自由が丘 &gt; ハンバーガー &gt; <strong>サンライズバーガー</strong>
+  </div>
+
+  <!-- 店舗トップ情報 -->
+  <div class="shop-header-wrap">
+    <div class="shop-header">
+      <div class="shop-title-row">
+        <div>
+          <h1 class="shop-name">サンライズバーガー<small>（SUNRISE BURGER）</small></h1>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-save" id="saveBtn" onclick="toggleSave()">
+            <span>★</span> <span id="saveText">保存</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="rating-summary">
+        <div class="main-score">
+          <span class="stars">★★★★☆</span>
+          <span class="score-num">3.68</span>
+        </div>
+        <div class="stat-item">口コミ <strong id="reviewCount">3</strong>件</div>
+        <div class="stat-item">保存 <strong id="saveCount">428</strong>件</div>
+      </div>
+
+      <div class="shop-meta">
+        <div><span class="meta-label">最寄り駅：</span>自由が丘駅 徒歩5分 / 奥沢駅 徒歩3分</div>
+        <div><span class="meta-label">ジャンル：</span>ハンバーガー</div>
+        <div><span class="meta-label">予算：</span>☀ ￥1,000～￥1,999 / ☾ ￥1,000～￥1,999</div>
+        <div><span class="meta-label">定休日：</span>火曜日</div>
+      </div>
+
+      <div class="shop-tabs">
+        <div class="shop-tab">店舗トップ</div>
+        <div class="shop-tab">メニュー</div>
+        <div class="shop-tab active">口コミ (<span id="tabReviewCount">3</span>)</div>
+        <div class="shop-tab">地図</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="container">
+    <!-- 左カラム：口コミ一覧 -->
+    <div class="main-col">
+      <div class="review-controls">
+        <div class="filter-group">
+          <button class="filter-btn active" onclick="filterReviews('all', this)">すべて</button>
+          <button class="filter-btn" onclick="filterReviews('lunch', this)">☀ ランチ</button>
+          <button class="filter-btn" onclick="filterReviews('dinner', this)">☾ ディナー</button>
+        </div>
+        <button class="btn-post-review" onclick="toggleForm()">✎ 口コミを投稿する</button>
+      </div>
+
+      <!-- 口コミ投稿フォーム -->
+      <div class="post-form-box" id="postForm">
+        <h3>サンライズバーガーの口コミを投稿</h3>
+        <div class="form-row">
+          <label>ニックネーム</label>
+          <input type="text" id="inputName" placeholder="例：自由が丘グルメ探検隊">
+        </div>
+        <div class="form-row" style="display:flex; gap:10px;">
+          <div style="flex:1;">
+            <label>利用時間帯</label>
+            <select id="inputTime">
+              <option value="lunch">☀ ランチ</option>
+              <option value="dinner">☾ ディナー</option>
+            </select>
+          </div>
+          <div style="flex:1;">
+            <label>総合評価</label>
+            <select id="inputScore">
+              <option value="4.5">4.5 ★★★★★</option>
+              <option value="4.0" selected>4.0 ★★★★☆</option>
+              <option value="3.5">3.5 ★★★☆☆</option>
+              <option value="3.0">3.0 ★★★☆☆</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>口コミタイトル</label>
+          <input type="text" id="inputTitle" placeholder="例：国産黒毛和牛100%パティの肉汁が圧倒的！">
+        </div>
+        <div class="form-row">
+          <label>本文</label>
+          <textarea id="inputBody" rows="4" placeholder="料理の味、バンズの食感、お店の雰囲気などを教えてください"></textarea>
+        </div>
+        <button class="btn-post-review" onclick="addReview()">投稿を公開する</button>
+      </div>
+
+      <!-- 口コミリスト -->
+      <div id="reviewList">
+        <!-- 口コミ1 -->
+        <article class="review-card" data-time="lunch">
+          <div class="reviewer-info">
+            <div class="avatar">肉</div>
+            <div>
+              <div class="reviewer-name">肉汁ハンター東京 <span class="reviewer-badge">（口コミ 184件）</span></div>
+              <div class="reviewer-badge">2026年11月訪問</div>
+            </div>
+          </div>
+          <div class="review-score-bar">
+            <span class="time-badge time-lunch">☀ ランチ</span>
+            <span class="stars" style="font-size:15px;">★★★★☆</span>
+            <span class="review-score-val">4.1</span>
+            <span class="sub-scores">[ 料理・味 4.3 | サービス 3.8 | 雰囲気 4.0 | CP 3.7 ]</span>
+          </div>
+          <h2 class="review-title">粗挽き黒毛和牛の旨味がダイレクト！奥沢の隠れ家プレミアムバーガー</h2>
+          <p class="review-body">自由が丘から奥沢方面へ歩いて5分ほど。落ち着いた大人の雰囲気のハンバーガーショップです。
+今回注文したのは看板メニューの「サンライズ・クラシック（1,280円）」。
+
+まず驚いたのがパティの肉々しさ。国産黒毛和牛100%の粗挽きブレンドとのことで、噛むたびにステーキのような力強い旨味とジューシーな肉汁が溢れ出します。
+毎朝店内で焼き上げているという自家製バンズは、小麦の香りが豊かで、たっぷりの肉汁をしっかり受け止めてくれるしっとり食感。地元・奥沢の採れたて野菜もシャキシャキでバランスが絶妙でした。</p>
+          <div class="review-footer">
+            <span>使った金額：￥1,000～￥1,999</span>
+            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>24</span></button>
+          </div>
+        </article>
+
+        <!-- 口コミ2 -->
+        <article class="review-card" data-time="dinner">
+          <div class="reviewer-info">
+            <div class="avatar">チ</div>
+            <div>
+              <div class="reviewer-name">チーズとワイン好きOL <span class="reviewer-badge">（口コミ 62件）</span></div>
+              <div class="reviewer-badge">2026年11月訪問</div>
+            </div>
+          </div>
+          <div class="review-score-bar">
+            <span class="time-badge time-dinner">☾ ディナー</span>
+            <span class="stars" style="font-size:15px;">★★★★☆</span>
+            <span class="review-score-val">3.9</span>
+            <span class="sub-scores">[ 料理・味 4.1 | サービス 3.9 | 雰囲気 4.2 | CP 3.5 ]</span>
+          </div>
+          <h2 class="review-title">季節限定「クワトロチーズの雪解けバーガー」の濃厚さがたまらない</h2>
+          <p class="review-body">仕事帰りのディナーで利用。夜は照明が少し落ち着いていて、ゆっくり食事が楽しめます。
+期間限定の「クワトロチーズの雪解けバーガー（1,700円）」をオーダーしました。
+
+4種の厳選チーズが熱々の和牛パティの上で文字通り雪解けのようにとろけていて、チーズ好きにはたまらないビジュアル。濃厚なチーズのコクに黒毛和牛の旨味が負けておらず、最後まで飽きずにペロリと完食しました。事前のオンライン注文でテイクアウトもできるようなので、次は自宅用にも利用したいです。</p>
+          <div class="review-footer">
+            <span>使った金額：￥1,000～￥1,999</span>
+            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>15</span></button>
+          </div>
+        </article>
+
+        <!-- 口コミ3 -->
+        <article class="review-card" data-time="lunch">
+          <div class="reviewer-info">
+            <div class="avatar">ア</div>
+            <div>
+              <div class="reviewer-name">じゆうちょう <span class="reviewer-badge">（口コミ 310件）</span></div>
+              <div class="reviewer-badge">2026年10月訪問</div>
+            </div>
+          </div>
+          <div class="review-score-bar">
+            <span class="time-badge time-lunch">☀ ランチ</span>
+            <span class="stars" style="font-size:15px;">★★★☆☆</span>
+            <span class="review-score-val">3.6</span>
+            <span class="sub-scores">[ 料理・味 3.8 | サービス 3.5 | 雰囲気 3.7 | CP 3.5 ]</span>
+          </div>
+          <h2 class="review-title">ハーフカットのアボカドが贅沢！野菜もフレッシュで重たくない</h2>
+          <p class="review-body">週末のランチタイムに訪問。人気メニューの「アボカド・クリーンバーガー（1,450円）」をいただきました。
+熟れ具合が完璧なアボカドが贅沢にハーフカットで入っており、クリーミーな味わいが和牛パティとよく合います。地場野菜のフレッシュさのおかげで、ボリュームがあるのに食後感が重たくないのが嬉しいポイントです。</p>
+          <div class="review-footer">
+            <span>使った金額：￥1,000～￥1,999</span>
+            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>9</span></button>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 右カラム：店舗基本情報・メニュー -->
+    <aside class="side-col">
+      <div class="side-box">
+        <h3>ピックアップメニュー</h3>
+        <ul class="pickup-menu-list">
+          <li>
+            <strong>サンライズ・クラシック</strong><span class="menu-price">¥1,280</span>
+            <div style="font-size:11px; color:#767676;">国産黒毛和牛100%の旨味をダイレクトに味わう看板商品</div>
+          </li>
+          <li>
+            <strong>アボカド・クリーンバーガー</strong><span class="menu-price">¥1,450</span>
+            <div style="font-size:11px; color:#767676;">フレッシュなアボカドを贅沢にハーフカット使用</div>
+          </li>
+          <li>
+            <strong>クワトロチーズの雪解けバーガー</strong><span class="menu-price">¥1,700</span>
+            <div style="font-size:11px; color:#767676;">4種の厳選チーズがとろける季節限定品</div>
+          </li>
+        </ul>
+        <a href="https://aftereffects-ok.github.io/SUNRISE_BURGER/index.html" target="_blank" class="btn-official">公式オンライン注文・テイクアウト</a>
+      </div>
+
+      <div class="side-box">
+        <h3>店舗基本情報</h3>
+        <table class="info-table">
+          <tr>
+            <th>店名</th>
+            <td>サンライズバーガー<br>（SUNRISE BURGER）</td>
+          </tr>
+          <tr>
+            <th>ジャンル</th>
+            <td>ハンバーガー</td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>東京都世田谷区奥沢X-X-X</td>
+          </tr>
+          <tr>
+            <th>交通手段</th>
+            <td>東急東横線・大井町線「自由が丘駅」徒歩5分<br>東急目黒線「奥沢駅」徒歩3分</td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>11:00 - 22:00（L.O. 21:00）</td>
+          </tr>
+          <tr>
+            <th>定休日</th>
+            <td>火曜日</td>
+          </tr>
+        </table>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // 保存ボタン切り替え
+    let isSaved = false;
+    function toggleSave() {
+      isSaved = !isSaved;
+      const btn = document.getElementById('saveBtn');
+      const text = document.getElementById('saveText');
+      const count = document.getElementById('saveCount');
+      let current = parseInt(count.textContent, 10);
+
+      if (isSaved) {
+        btn.classList.add('saved');
+        text.textContent = '保存済み';
+        count.textContent = current + 1;
+      } else {
+        btn.classList.remove('saved');
+        text.textContent = '保存';
+        count.textContent = current - 1;
+      }
+    }
+
+    // いいねボタン
+    function likeReview(btn) {
+      if (btn.dataset.liked) return;
+      btn.dataset.liked = "true";
+      btn.style.borderColor = "#ff9600";
+      btn.style.color = "#e68600";
+      const span = btn.querySelector('span');
+      span.textContent = parseInt(span.textContent, 10) + 1;
+    }
+
+    // ランチ・ディナー絞り込み
+    function filterReviews(type, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.review-card').forEach(card => {
+        if (type === 'all' || card.dataset.time === type) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 投稿フォーム開閉
+    function toggleForm() {
+      const form = document.getElementById('postForm');
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // 新規口コミ追加
+    function addReview() {
+      const name = document.getElementById('inputName').value.trim() || 'ゲストレビュアー';
+      const time = document.getElementById('inputTime').value;
+      const score = document.getElementById('inputScore').value;
+      const title = document.getElementById('inputTitle').value.trim();
+      const body = document.getElementById('inputBody').value.trim();
+
+      if (!title || !body) {
+        alert('タイトルと本文を入力してください。');
+        return;
+      }
+
+      const timeBadge = time === 'lunch'
+        ? '<span class="time-badge time-lunch">☀ ランチ</span>'
+        : '<span class="time-badge time-dinner">☾ ディナー</span>';
+
+      const cardHTML = `
+        <article class="review-card" data-time="${time}">
+          <div class="reviewer-info">
+            <div class="avatar">${name.charAt(0)}</div>
+            <div>
+              <div class="reviewer-name">${escapeHtml(name)} <span class="reviewer-badge">（口コミ 1件）</span></div>
+              <div class="reviewer-badge">2026年11月訪問</div>
+            </div>
+          </div>
+          <div class="review-score-bar">
+            ${timeBadge}
+            <span class="stars" style="font-size:15px;">★★★★☆</span>
+            <span class="review-score-val">${score}</span>
+            <span class="sub-scores">[ 新着レビュー ]</span>
+          </div>
+          <h2 class="review-title">${escapeHtml(title)}</h2>
+          <p class="review-body">${escapeHtml(body)}</p>
+          <div class="review-footer">
+            <span>使った金額：￥1,000～￥1,999</span>
+            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>0</span></button>
+          </div>
+        </article>
+      `;
+
+      document.getElementById('reviewList').insertAdjacentHTML('afterbegin', cardHTML);
+
+      // 件数更新
+      const countEl = document.getElementById('reviewCount');
+      const tabCountEl = document.getElementById('tabReviewCount');
+      const nextCount = parseInt(countEl.textContent, 10) + 1;
+      countEl.textContent = nextCount;
+      tabCountEl.textContent = nextCount;
+
+      // フォームリセット
+      document.getElementById('inputTitle').value = '';
+      document.getElementById('inputBody').value = '';
+      toggleForm();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+  </script>
+</body>
+</html>

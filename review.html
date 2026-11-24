@@ -210,9 +210,13 @@
       border-right: 1px solid var(--border-gray);
       cursor: pointer;
       background: #fafafa;
+      transition: background 0.15s;
     }
     .shop-tab:first-child {
       border-left: 1px solid var(--border-gray);
+    }
+    .shop-tab:hover {
+      background: #fff8eb;
     }
     .shop-tab.active {
       background: #fff;
@@ -237,6 +241,111 @@
     .side-col {
       width: 300px;
       flex-shrink: 0;
+    }
+
+    /* タブパネル表示制御 */
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* 共通コンテンツカード */
+    .content-box {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .content-box h2 {
+      font-size: 17px;
+      border-left: 4px solid var(--main-orange);
+      padding-left: 10px;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    /* 店舗トップ用スタイル */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .concept-card {
+      background: #faf8f5;
+      border: 1px solid #ece8e0;
+      padding: 14px;
+      border-radius: 3px;
+    }
+    .concept-card h3 {
+      font-size: 13px;
+      color: var(--dark-orange);
+      margin-bottom: 6px;
+    }
+    .concept-card p {
+      font-size: 12px;
+      color: var(--text-dark);
+    }
+
+    /* メニュータブ用スタイル */
+    .menu-category-title {
+      font-size: 14px;
+      font-weight: bold;
+      background: #faf8f5;
+      padding: 8px 12px;
+      border-left: 3px solid var(--main-orange);
+      margin: 18px 0 10px;
+    }
+    .menu-category-title:first-of-type {
+      margin-top: 0;
+    }
+    .menu-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 4px;
+      border-bottom: 1px dotted var(--border-gray);
+    }
+    .menu-item-row:last-child {
+      border-bottom: none;
+    }
+    .menu-item-name {
+      font-weight: bold;
+      font-size: 14px;
+      color: #111;
+    }
+    .menu-badge {
+      display: inline-block;
+      background: var(--star-red);
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 2px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .menu-item-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .menu-item-price {
+      font-weight: bold;
+      font-size: 15px;
+      color: var(--text-dark);
+      white-space: nowrap;
+      margin-left: 15px;
+    }
+
+    /* 地図タブ用スタイル */
+    .map-frame {
+      width: 100%;
+      height: 320px;
+      border: 1px solid var(--border-gray);
+      border-radius: 3px;
+      margin-bottom: 15px;
     }
 
     /* 口コミ絞り込み・投稿ボックス */
@@ -460,6 +569,13 @@
       margin-top: 10px;
       text-decoration: none !important;
     }
+    .btn-link-more {
+      display: inline-block;
+      margin-top: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--link-blue);
+    }
   </style>
 </head>
 <body>
@@ -478,7 +594,7 @@
 
   <!-- パンくずリスト -->
   <div class="breadcrumb">
-    東京グルメ &gt; 自由が丘・三軒茶屋・二子玉川 &gt; 自由が丘 &gt; ハンバーガー &gt; <strong>サンライズバーガー</strong>
+    <a href="index.html">サンライズバーガー公式HOME</a> &gt; 東京グルメ &gt; 自由が丘・奥沢 &gt; ハンバーガー &gt; <strong>サンライズバーガー</strong>
   </div>
 
   <!-- 店舗トップ情報 -->
@@ -511,143 +627,263 @@
         <div><span class="meta-label">定休日：</span>火曜日</div>
       </div>
 
+      <!-- タブ切り替え -->
       <div class="shop-tabs">
-        <div class="shop-tab">店舗トップ</div>
-        <div class="shop-tab">メニュー</div>
-        <div class="shop-tab active">口コミ (<span id="tabReviewCount">3</span>)</div>
-        <div class="shop-tab">地図</div>
+        <div class="shop-tab" data-target="tab-top" onclick="switchTab('tab-top', this)">店舗トップ</div>
+        <div class="shop-tab" data-target="tab-menu" onclick="switchTab('tab-menu', this)">メニュー</div>
+        <div class="shop-tab active" data-target="tab-reviews" onclick="switchTab('tab-reviews', this)">口コミ (<span id="tabReviewCount">3</span>)</div>
+        <div class="shop-tab" data-target="tab-map" onclick="switchTab('tab-map', this)">地図</div>
       </div>
     </div>
   </div>
 
   <!-- メインコンテンツ -->
   <div class="container">
-    <!-- 左カラム：口コミ一覧 -->
+    <!-- 左カラム：タブごとの切り替えエリア -->
     <div class="main-col">
-      <div class="review-controls">
-        <div class="filter-group">
-          <button class="filter-btn active" onclick="filterReviews('all', this)">すべて</button>
-          <button class="filter-btn" onclick="filterReviews('lunch', this)">☀ ランチ</button>
-          <button class="filter-btn" onclick="filterReviews('dinner', this)">☾ ディナー</button>
-        </div>
-        <button class="btn-post-review" onclick="toggleForm()">✎ 口コミを投稿する</button>
-      </div>
 
-      <!-- 口コミ投稿フォーム -->
-      <div class="post-form-box" id="postForm">
-        <h3>サンライズバーガーの口コミを投稿</h3>
-        <div class="form-row">
-          <label>ニックネーム</label>
-          <input type="text" id="inputName" placeholder="例：自由が丘グルメ探検隊">
-        </div>
-        <div class="form-row" style="display:flex; gap:10px;">
-          <div style="flex:1;">
-            <label>利用時間帯</label>
-            <select id="inputTime">
-              <option value="lunch">☀ ランチ</option>
-              <option value="dinner">☾ ディナー</option>
-            </select>
-          </div>
-          <div style="flex:1;">
-            <label>総合評価</label>
-            <select id="inputScore">
-              <option value="4.5">4.5 ★★★★★</option>
-              <option value="4.0" selected>4.0 ★★★★☆</option>
-              <option value="3.5">3.5 ★★★☆☆</option>
-              <option value="3.0">3.0 ★★★☆☆</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <label>口コミタイトル</label>
-          <input type="text" id="inputTitle" placeholder="例：国産黒毛和牛100%パティの肉汁が圧倒的！">
-        </div>
-        <div class="form-row">
-          <label>本文</label>
-          <textarea id="inputBody" rows="4" placeholder="料理の味、バンズの食感、お店の雰囲気などを教えてください"></textarea>
-        </div>
-        <button class="btn-post-review" onclick="addReview()">投稿を公開する</button>
-      </div>
-
-      <!-- 口コミリスト -->
-      <div id="reviewList">
-        <!-- 口コミ1 -->
-        <article class="review-card" data-time="lunch">
-          <div class="reviewer-info">
-            <div class="avatar">肉</div>
-            <div>
-              <div class="reviewer-name">肉汁ハンター東京 <span class="reviewer-badge">（口コミ 184件）</span></div>
-              <div class="reviewer-badge">2026年11月訪問</div>
+      <!-- ① 店舗トップタブ -->
+      <section id="tab-top" class="tab-panel">
+        <div class="content-box">
+          <h2>国産黒毛和牛100%×自家製バンズの本格プレミアムバーガー</h2>
+          <p style="line-height: 1.8;">
+            自由が丘・奥沢エリアに佇む大人のためのハンバーガーショップ「SUNRISE BURGER（サンライズバーガー）」。<br>
+            厳選した国産黒毛和牛100%の粗挽きパティと、毎朝店内で焼き上げる香り豊かな自家製バンズ、地元・奥沢の採れたて野菜を組み合わせた本格バーガーをご提供しています。ランチタイムのカジュアルなご利用から、ディナータイムのゆったりとしたお食事、オンライン事前注文によるテイクアウトまで幅広く対応しております。
+          </p>
+          <div class="concept-grid">
+            <div class="concept-card">
+              <h3>01. 国産黒毛和牛100%パティ</h3>
+              <p>ステーキのような力強い旨味とジューシーな肉汁を引き出す独自配合の粗挽きブレンド。</p>
+            </div>
+            <div class="concept-card">
+              <h3>02. 毎朝焼き上げる自家製バンズ</h3>
+              <p>小麦の豊かな香りと、肉汁をしっかり受け止めるしっとり・ふんわり食感の特製バンズ。</p>
+            </div>
+            <div class="concept-card">
+              <h3>03. 地元・奥沢の採れたて野菜</h3>
+              <p>契約農家から届くフレッシュでシャキシャキな野菜を贅沢に使用し、軽やかな後味を実現。</p>
             </div>
           </div>
-          <div class="review-score-bar">
-            <span class="time-badge time-lunch">☀ ランチ</span>
-            <span class="stars" style="font-size:15px;">★★★★☆</span>
-            <span class="review-score-val">4.1</span>
-            <span class="sub-scores">[ 料理・味 4.3 | サービス 3.8 | 雰囲気 4.0 | CP 3.7 ]</span>
+        </div>
+
+        <div class="content-box">
+          <h2>注目の口コミピックアップ</h2>
+          <p style="font-weight:bold; margin-bottom:6px;">「粗挽き黒毛和牛の旨味がダイレクト！奥沢の隠れ家プレミアムバーガー」（★4.1）</p>
+          <p style="color:var(--text-muted); font-size:12px;">
+            まず驚いたのがパティの肉々しさ。国産黒毛和牛100%の粗挽きブレンドとのことで、噛むたびにステーキのような力強い旨味とジューシーな肉汁が溢れ出します...
+          </p>
+          <span class="btn-link-more" onclick="switchTabByName('tab-reviews')">▶ すべての口コミ（3件）を見る</span>
+        </div>
+      </section>
+
+      <!-- ② メニュータブ -->
+      <section id="tab-menu" class="tab-panel">
+        <div class="content-box">
+          <h2>料理・ドリンクメニュー（税込）</h2>
+
+          <div class="menu-category-title">シグネチャーバーガー</div>
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">サンライズ・クラシック<span class="menu-badge">看板メニュー</span></div>
+              <div class="menu-item-desc">国産黒毛和牛100%パティ、特製オリジナルソース、レタス、トマト、グリルオニオン</div>
+            </div>
+            <div class="menu-item-price">¥1,280</div>
           </div>
-          <h2 class="review-title">粗挽き黒毛和牛の旨味がダイレクト！奥沢の隠れ家プレミアムバーガー</h2>
-          <p class="review-body">自由が丘から奥沢方面へ歩いて5分ほど。落ち着いた大人の雰囲気のハンバーガーショップです。
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">アボカド・クリーンバーガー<span class="menu-badge" style="background:#82b541;">人気No.2</span></div>
+              <div class="menu-item-desc">完熟アボカドを贅沢にハーフカット使用。濃厚なコクとフレッシュ野菜の爽やかなバランス</div>
+            </div>
+            <div class="menu-item-price">¥1,450</div>
+          </div>
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">クワトロチーズの雪解けバーガー<span class="menu-badge" style="background:#ff9600;">季節限定</span></div>
+              <div class="menu-item-desc">チェダー・モッツァレラ・ゴーダ・ゴルゴンゾーラの4種チーズが熱々パティの上でとろける一品</div>
+            </div>
+            <div class="menu-item-price">¥1,700</div>
+          </div>
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">スモーキーベーコン・エッグバーガー</div>
+              <div class="menu-item-desc">厚切り自家製スモークベーコンと半熟目玉焼きを合わせたボリューム満点の定番バーガー</div>
+            </div>
+            <div class="menu-item-price">¥1,580</div>
+          </div>
+
+          <div class="menu-category-title">サイド・セットメニュー</div>
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">フレンチフライ＆ドリンクセット</div>
+              <div class="menu-item-desc">皮付きクリスピーポテト（ハーブソルト味）＋お好きなソフトドリンク</div>
+            </div>
+            <div class="menu-item-price">+¥450</div>
+          </div>
+          <div class="menu-item-row">
+            <div>
+              <div class="menu-item-name">クラフトビール各種（IPA / ペールエール）</div>
+              <div class="menu-item-desc">黒毛和牛バーガーとの相性を追求した厳選クラフトビール</div>
+            </div>
+            <div class="menu-item-price">¥850</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 口コミタブ（初期表示） -->
+      <section id="tab-reviews" class="tab-panel active">
+        <div class="review-controls">
+          <div class="filter-group">
+            <button class="filter-btn active" onclick="filterReviews('all', this)">すべて</button>
+            <button class="filter-btn" onclick="filterReviews('lunch', this)">☀ ランチ</button>
+            <button class="filter-btn" onclick="filterReviews('dinner', this)">☾ ディナー</button>
+          </div>
+          <button class="btn-post-review" onclick="toggleForm()">✎ 口コミを投稿する</button>
+        </div>
+
+        <!-- 口コミ投稿フォーム -->
+        <div class="post-form-box" id="postForm">
+          <h3>サンライズバーガーの口コミを投稿</h3>
+          <div class="form-row">
+            <label>ニックネーム</label>
+            <input type="text" id="inputName" placeholder="例：自由が丘グルメ探検隊">
+          </div>
+          <div class="form-row" style="display:flex; gap:10px;">
+            <div style="flex:1;">
+              <label>利用時間帯</label>
+              <select id="inputTime">
+                <option value="lunch">☀ ランチ</option>
+                <option value="dinner">☾ ディナー</option>
+              </select>
+            </div>
+            <div style="flex:1;">
+              <label>総合評価</label>
+              <select id="inputScore">
+                <option value="4.5">4.5 ★★★★★</option>
+                <option value="4.0" selected>4.0 ★★★★☆</option>
+                <option value="3.5">3.5 ★★★☆☆</option>
+                <option value="3.0">3.0 ★★★☆☆</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>口コミタイトル</label>
+            <input type="text" id="inputTitle" placeholder="例：国産黒毛和牛100%パティの肉汁が圧倒的！">
+          </div>
+          <div class="form-row">
+            <label>本文</label>
+            <textarea id="inputBody" rows="4" placeholder="料理の味、バンズの食感、お店の雰囲気などを教えてください"></textarea>
+          </div>
+          <button class="btn-post-review" onclick="addReview()">投稿を公開する</button>
+        </div>
+
+        <!-- 口コミリスト -->
+        <div id="reviewList">
+          <!-- 口コミ1 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">肉</div>
+              <div>
+                <div class="reviewer-name">肉汁ハンター東京 <span class="reviewer-badge">（口コミ 184件）</span></div>
+                <div class="reviewer-badge">2026年11月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">4.1</span>
+              <span class="sub-scores">[ 料理・味 4.3 | サービス 3.8 | 雰囲気 4.0 | CP 3.7 ]</span>
+            </div>
+            <h2 class="review-title">粗挽き黒毛和牛の旨味がダイレクト！奥沢の隠れ家プレミアムバーガー</h2>
+            <p class="review-body">自由が丘から奥沢方面へ歩いて5分ほど。落ち着いた大人の雰囲気のハンバーガーショップです。
 今回注文したのは看板メニューの「サンライズ・クラシック（1,280円）」。
 
 まず驚いたのがパティの肉々しさ。国産黒毛和牛100%の粗挽きブレンドとのことで、噛むたびにステーキのような力強い旨味とジューシーな肉汁が溢れ出します。
 毎朝店内で焼き上げているという自家製バンズは、小麦の香りが豊かで、たっぷりの肉汁をしっかり受け止めてくれるしっとり食感。地元・奥沢の採れたて野菜もシャキシャキでバランスが絶妙でした。</p>
-          <div class="review-footer">
-            <span>使った金額：￥1,000～￥1,999</span>
-            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>24</span></button>
-          </div>
-        </article>
-
-        <!-- 口コミ2 -->
-        <article class="review-card" data-time="dinner">
-          <div class="reviewer-info">
-            <div class="avatar">チ</div>
-            <div>
-              <div class="reviewer-name">チーズとワイン好きOL <span class="reviewer-badge">（口コミ 62件）</span></div>
-              <div class="reviewer-badge">2026年11月訪問</div>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>24</span></button>
             </div>
-          </div>
-          <div class="review-score-bar">
-            <span class="time-badge time-dinner">☾ ディナー</span>
-            <span class="stars" style="font-size:15px;">★★★★☆</span>
-            <span class="review-score-val">3.9</span>
-            <span class="sub-scores">[ 料理・味 4.1 | サービス 3.9 | 雰囲気 4.2 | CP 3.5 ]</span>
-          </div>
-          <h2 class="review-title">季節限定「クワトロチーズの雪解けバーガー」の濃厚さがたまらない</h2>
-          <p class="review-body">仕事帰りのディナーで利用。夜は照明が少し落ち着いていて、ゆっくり食事が楽しめます。
+          </article>
+
+          <!-- 口コミ2 -->
+          <article class="review-card" data-time="dinner">
+            <div class="reviewer-info">
+              <div class="avatar">チ</div>
+              <div>
+                <div class="reviewer-name">チーズとワイン好きOL <span class="reviewer-badge">（口コミ 62件）</span></div>
+                <div class="reviewer-badge">2026年11月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-dinner">☾ ディナー</span>
+              <span class="stars" style="font-size:15px;">★★★★☆</span>
+              <span class="review-score-val">3.9</span>
+              <span class="sub-scores">[ 料理・味 4.1 | サービス 3.9 | 雰囲気 4.2 | CP 3.5 ]</span>
+            </div>
+            <h2 class="review-title">季節限定「クワトロチーズの雪解けバーガー」の濃厚さがたまらない</h2>
+            <p class="review-body">仕事帰りのディナーで利用。夜は照明が少し落ち着いていて、ゆっくり食事が楽しめます。
 期間限定の「クワトロチーズの雪解けバーガー（1,700円）」をオーダーしました。
 
 4種の厳選チーズが熱々の和牛パティの上で文字通り雪解けのようにとろけていて、チーズ好きにはたまらないビジュアル。濃厚なチーズのコクに黒毛和牛の旨味が負けておらず、最後まで飽きずにペロリと完食しました。事前のオンライン注文でテイクアウトもできるようなので、次は自宅用にも利用したいです。</p>
-          <div class="review-footer">
-            <span>使った金額：￥1,000～￥1,999</span>
-            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>15</span></button>
-          </div>
-        </article>
-
-        <!-- 口コミ3 -->
-        <article class="review-card" data-time="lunch">
-          <div class="reviewer-info">
-            <div class="avatar">ア</div>
-            <div>
-              <div class="reviewer-name">じゆうちょう <span class="reviewer-badge">（口コミ 310件）</span></div>
-              <div class="reviewer-badge">2026年10月訪問</div>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>15</span></button>
             </div>
-          </div>
-          <div class="review-score-bar">
-            <span class="time-badge time-lunch">☀ ランチ</span>
-            <span class="stars" style="font-size:15px;">★★★☆☆</span>
-            <span class="review-score-val">3.6</span>
-            <span class="sub-scores">[ 料理・味 3.8 | サービス 3.5 | 雰囲気 3.7 | CP 3.5 ]</span>
-          </div>
-          <h2 class="review-title">ハーフカットのアボカドが贅沢！野菜もフレッシュで重たくない</h2>
-          <p class="review-body">週末のランチタイムに訪問。人気メニューの「アボカド・クリーンバーガー（1,450円）」をいただきました。
+          </article>
+
+          <!-- 口コミ3 -->
+          <article class="review-card" data-time="lunch">
+            <div class="reviewer-info">
+              <div class="avatar">ア</div>
+              <div>
+                <div class="reviewer-name">じゆうちょう <span class="reviewer-badge">（口コミ 310件）</span></div>
+                <div class="reviewer-badge">2026年10月訪問</div>
+              </div>
+            </div>
+            <div class="review-score-bar">
+              <span class="time-badge time-lunch">☀ ランチ</span>
+              <span class="stars" style="font-size:15px;">★★★☆☆</span>
+              <span class="review-score-val">3.6</span>
+              <span class="sub-scores">[ 料理・味 3.8 | サービス 3.5 | 雰囲気 3.7 | CP 3.5 ]</span>
+            </div>
+            <h2 class="review-title">ハーフカットのアボカドが贅沢！野菜もフレッシュで重たくない</h2>
+            <p class="review-body">週末のランチタイムに訪問。人気メニューの「アボカド・クリーンバーガー（1,450円）」をいただきました。
 熟れ具合が完璧なアボカドが贅沢にハーフカットで入っており、クリーミーな味わいが和牛パティとよく合います。地場野菜のフレッシュさのおかげで、ボリュームがあるのに食後感が重たくないのが嬉しいポイントです。</p>
-          <div class="review-footer">
-            <span>使った金額：￥1,000～￥1,999</span>
-            <button class="btn-like" onclick="likeReview(this)">いいね！ <span>9</span></button>
-          </div>
-        </article>
-      </div>
+            <div class="review-footer">
+              <span>使った金額：￥1,000～￥1,999</span>
+              <button class="btn-like" onclick="likeReview(this)">いいね！ <span>9</span></button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ④ 地図タブ -->
+      <section id="tab-map" class="tab-panel">
+        <div class="content-box">
+          <h2>サンライズバーガー 周辺地図・アクセス</h2>
+          <iframe
+            class="map-frame"
+            src="https://maps.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E4%B8%96%E7%94%B0%E8%B0%B7%E5%8C%BA%E5%A5%A5%E6%B2%A2&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <table class="info-table">
+            <tr>
+              <th>住所</th>
+              <td>東京都世田谷区奥沢X-X-X</td>
+            </tr>
+            <tr>
+              <th>アクセス</th>
+              <td>東急東横線・大井町線「自由が丘駅」南口より徒歩5分<br>東急目黒線「奥沢駅」より徒歩3分</td>
+            </tr>
+            <tr>
+              <th>駐車場</th>
+              <td>無（近隣にコインパーキングあり）</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
     </div>
 
     <!-- 右カラム：店舗基本情報・メニュー -->
@@ -668,7 +904,7 @@
             <div style="font-size:11px; color:#767676;">4種の厳選チーズがとろける季節限定品</div>
           </li>
         </ul>
-        <a href="https://aftereffects-ok.github.io/SUNRISE_BURGER/index.html" target="_blank" class="btn-official">公式オンライン注文・テイクアウト</a>
+        <a href="order.html" class="btn-official">公式オンライン注文・テイクアウト</a>
       </div>
 
       <div class="side-box">
@@ -704,6 +940,21 @@
   </div>
 
   <script>
+    // タブ切り替え処理
+    function switchTab(targetId, clickedTab) {
+      document.querySelectorAll('.shop-tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+      clickedTab.classList.add('active');
+      document.getElementById(targetId).classList.add('active');
+    }
+
+    // パネル内リンクからのタブ切り替え用
+    function switchTabByName(targetId) {
+      const targetTab = document.querySelector(`.shop-tab[data-target="${targetId}"]`);
+      if (targetTab) switchTab(targetId, targetTab);
+    }
+
     // 保存ボタン切り替え
     let isSaved = false;
     function toggleSave() {
